@@ -1,0 +1,39 @@
+{% extends 'base_templates/dashboard_base.html' %}
+{% block title %}{{title}}{% endblock %}
+
+{%block dashboard_choice%}
+{%endblock%}
+
+
+{% block testing %}
+<h3 class="horizontal-auto-margin">Tools</h3>
+
+<li class="nav-item">
+    <a class="nav-link ghost-button-blue" aria-current="page" href={{ url_for('landing')}}>
+        <span class="ml-2">Home</span>
+    </a>
+</li>
+
+<hr>
+
+<li class="nav-item">
+    <a class="nav-link ghost-button-blue" aria-current="page" href="http://www.google.com">
+        <span class="ml-2">Tab 1</span>
+    </a>
+</li>
+<li class="nav-item">
+    <a class="nav-link ghost-button-blue" aria-current="page" href="http://www.google.com">
+        <span class="ml-2">Tab 2</span>
+    </a>
+</li>
+<li class="nav-item">
+    <a class="nav-link ghost-button-blue" aria-current="page" href="http://www.google.com">
+        <span class="ml-2">Tab 3</span>
+    </a>
+</li>
+<hr>
+
+</ul>
+
+
+{% endblock %}
