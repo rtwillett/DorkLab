@@ -6,6 +6,8 @@ from flask import Flask, render_template, url_for, request, session, flash, redi
 # Importing all of the Blueprint objects into the application
 from flask_wtf.csrf import CSRFProtect
 
+from forms import UserInput
+
 # from models import User
 
 class Config(object):
@@ -33,12 +35,30 @@ def landing():
 # Routing
 @app.route("/dashboard")
 def dashboard():
-	return render_template('general_templates/dashboard.html', title = 'Title')
+
+	form = UserInput()
+
+	return render_template('general_templates/dashboard.html', form = form, title = 'Title')
+
+# Routing
+@app.route("/post_dork_inputs", methods=['POST'])
+def post_dork_inputs():
+
+	form_data_dict = {
+		'entity': request.form.get('entity'),
+		'startdate': request.form.get('startdate'),
+		'enddate': request.form.get('enddate'),
+		'filetype': request.form.get('doc_type')
+	}
+
+	# pass
+	return form_data_dict
 
 # References
 @app.route("/references")
 def references():
 	return render_template('general_templates/references.html', title = 'References')
+
 
 
 if __name__ == '__main__':
