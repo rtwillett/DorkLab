@@ -33,6 +33,57 @@
 <hr>
 
 </ul>
+{% endblock %}
 
+{% block content %}
+
+<main class="main-center">
+    <div class="container">
+        <h2>Name of My Webform</h2>
+        <form action="post_dork_inputs" method="POST">
+            {{ form.csrf_token }}
+            
+            <div class="form-group">
+                {{ form.entity.label(class_ = 'col-sm-2 col-form-label-lg') }}
+                <div class = "col-sm-6">
+                    {{ form.entity(class_ = 'form-control') }}
+                </div>
+            </div>
+
+            <div class="form-group">
+                {{ form.startdate.label(class_ = 'col-sm-2 col-form-label-lg') }}
+                <div class = "col-sm-6">
+                    {{ form.startdate(class_ = 'form-control') }}
+                </div>
+            </div>
+
+            <div class="form-group">
+                {{ form.enddate.label(class_ = 'col-sm-2 col-form-label-lg') }}
+                <div class = "col-sm-6">
+                    {{ form.enddate(class_ = 'form-control') }}
+                </div>
+            </div>
+
+            <!-- https://stackoverflow.com/questions/53344797/how-create-an-array-with-checkboxes-in-flask -->
+            <div>
+                <input type="checkbox" value="pdf" class="danger" id="doc_pdf" name='doc_type'>
+                <label for="doc_pdf">PDF</label>
+            </div>
+            <div>
+                <input type="checkbox" value="txt" class="danger" id="txt" name='doc_type'>
+                <label for="doc_txt">txt</label>
+            </div>
+
+
+            <div class="form-group">
+                {{ form.submit.label(class_ = 'col-sm-2 col-form-label-lg') }}
+                <div class = "col-sm-6">
+                    {{ form.submit(class_ = 'form-control') }}
+                </div>
+            </div>
+
+        </form>
+    </div>
+</main>
 
 {% endblock %}
