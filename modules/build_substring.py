@@ -3,14 +3,14 @@ class BuildSubstring:
         pass
 
 
-    def build_filetype_substring(self, files: list):
+    def build_filetype_substring(self, files: list)->str:
     
         # files = data['filetypes']
         ft_append = " OR ".join([f'filetype:{f}' for f in files])
         return f"({ft_append})"
 
 
-    def build_date_substring(self, date: str, isStartDate: bool):
+    def build_date_substring(self, date: str, isStartDate: bool)->str:
         
         # start_dt = data["start_date"]
         # end_dt = data["end_date"]
@@ -34,7 +34,7 @@ class BuildSubstring:
 
 
     
-    def build_full_string(self, data:dict):
+    def build_full_string(self, data:dict)->str:
         full_str = ""
 
         for key in data:
