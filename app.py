@@ -30,7 +30,7 @@ csrf = CSRFProtect(app)
 @app.route("/")
 @app.route("/home")
 def landing():
-	return render_template('general_templates/landing_page.html', title = 'Title')
+	return render_template('general_templates/landing_page.html', title = 'testsiala')
 
 # Routing
 @app.route("/dashboard")
@@ -57,7 +57,7 @@ def post_dork_inputs():
 # References
 @app.route("/references")
 def references():
-	return render_template('general_templates/references.html', title = 'References')
+	return render_template('general_templates/references.html', title = 'aabbbs')
 
 
 
