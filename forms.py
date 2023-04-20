@@ -27,3 +27,13 @@ class UserInput(FlaskForm):
 
     submit = SubmitField('Submit')
 
+
+class UserInputAP(FlaskForm):
+
+    entity = StringField("Enter your search terms: ")
+    startdate = DateField('Start Date: ')
+    enddate = DateField('End Date: ')
+
+    submit = SubmitField('Search')
+
+
