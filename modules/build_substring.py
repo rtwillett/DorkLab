@@ -13,17 +13,18 @@ class BuildSubstring:
         Docstring
         '''
     
-        if len(self.data['root_terms']) > 0:
-            return " & ".join([f'"{f}"' for f in self.data['root_terms']])
-        else:
+        if self.data['root_terms'] == '':
             return ''
+            
+        return " & ".join([f'"{f}"' for f in self.data['root_terms']])
+
 
     def build_filetype_substring(self)->str:
         '''
         Docstring
         '''
     
-        if len(self.data['filetypes']) > 0:
+        if self.data['filetypes'] != None:
             ft_append = " | ".join([f'filetype:{f}' for f in self.data['filetypes']])
             return f"({ft_append})"
         else:
@@ -35,8 +36,12 @@ class BuildSubstring:
         Docstring
         '''
         
-        start_dt = self.data["start_date"]
-        end_dt = self.data["end_date"]
+        if self.data["start_date"]: start_dt = self.data["start_date"]
+        else: start_dt = ""
+
+        if self.data["end_date"]: end_dt = self.data["end_date"]
+        else: end_dt = ""
+
         
         if start_dt != "" and end_dt != "":
             return f'after:{start_dt} & before:{end_dt}'
@@ -64,10 +69,19 @@ class BuildSubstring:
 
         full_str = ' & '.join(self.fragments)
 
-            
-
-
         return full_str
 
-def test():
-    print("test")
+
+    def build_search_engine_strings(self)-> dict:
+        
+        res = {}
+        
+        
+        for engine in self.data["search_engines"]:
+            if engine == "google":
+                res["google"] = self.q
+            elif engine == "yandex":
+                res["yandex"] = BuildStringYandex(self.data).q
+                
+        return res
+

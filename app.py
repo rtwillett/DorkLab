@@ -5,6 +5,7 @@ from flask import Flask, render_template, url_for, request, session, flash, redi
 
 # Importing all of the Blueprint objects into the application
 from flask_wtf.csrf import CSRFProtect
+from modules.build_substring import BuildSubstring
 
 from forms import UserInputAP, UserInput
 
@@ -19,7 +20,7 @@ app.config.from_object(Config)
 # app.config['UPLOAD_FOLDER'] = './uploads'
 # app.config['DATA_FOLDER'] = './application_data'
 
-csrf = CSRFProtect(app)
+#csrf = CSRFProtect(app)
 
 # Registering all Blueprints (makes them available application)
 # app.register_blueprint(ner, url_prefix="")
@@ -43,21 +44,26 @@ def dashboard():
 @app.route("/dashboard-ap")
 def dashboardAP():
 	form = UserInputAP()
-	return render_template('general_templates/dashboard-ap.html', title = 'aaixlsop', form=form)
+	return render_template('general_templates/dashboard-ap.html', form=form, title = 'aaixlsop')
 
 # Routing
 @app.route("/post_dork_inputs", methods=['POST'])
 def post_dork_inputs():
 
 	form_data_dict = {
-		'entity': request.form.get('entity'),
-		'startdate': request.form.get('startdate'),
-		'enddate': request.form.get('enddate'),
-		'filetype': request.form.get('doc_type')
+		'root_terms': request.form.get('entity'),
+		'start_date': request.form.get('startdate'),
+		'end_date': request.form.get('enddate'),
+		'filetypes': request.form.get('doc_type'),
+		'search_engines': request.form.get('search_engines')
 	}
 
-	# pass
-	return form_data_dict
+	bs = BuildSubstring(form_data_dict)
+
+	#return form_data_dict
+	#return { "test" :str(type(bs.build_full_string()))}
+	return bs.build_search_engine_strings()
+	# return render_template('general_templates/dashboard-ap.html', title = 'resuls', form=form, results=bs.build_full_string())
 
 # References
 @app.route("/about")

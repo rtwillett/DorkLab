@@ -30,7 +30,7 @@ class UserInput(FlaskForm):
 
 class UserInputAP(FlaskForm):
 
-    entity = StringField("Enter your search terms: ")
+    entity = StringField("Enter your search terms: ",[DataRequired()])
     startdate = DateField('Start Date: ')
     enddate = DateField('End Date: ')
 
