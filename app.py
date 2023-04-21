@@ -6,7 +6,7 @@ from flask import Flask, render_template, url_for, request, session, flash, redi
 # Importing all of the Blueprint objects into the application
 from flask_wtf.csrf import CSRFProtect
 
-from forms import UserInput
+from forms import UserInput, QuicksearchForm
 
 # from models import User
 
@@ -27,14 +27,10 @@ csrf = CSRFProtect(app)
 # app.register_blueprint(summ, url_prefix="")
 
 # Routing
+# @app.route("/dashboard")
 @app.route("/")
 @app.route("/home")
-def landing():
-	return render_template('general_templates/landing_page.html', title = 'testsiala')
-
-# Routing
-@app.route("/dashboard")
-def dashboard():
+def home():
 
 	form = UserInput()
 
@@ -44,22 +40,45 @@ def dashboard():
 @app.route("/post_dork_inputs", methods=['POST'])
 def post_dork_inputs():
 
+	from modules.build_substring import BuildSubstring
+	import re
+
 	form_data_dict = {
-		'entity': request.form.get('entity'),
-		'startdate': request.form.get('startdate'),
-		'enddate': request.form.get('enddate'),
-		'filetype': request.form.get('doc_type')
+		'root_terms': re.split('[,;|]', request.form.get('root_terms')),
+		'start_date': request.form.get('start_date'),
+		'end_date': request.form.get('end_date'),
+		'filetypes': re.split('[,;|]', request.form.get('filetypes'))
 	}
 
+	bs = BuildSubstring(form_data_dict)
+
+
 	# pass
+	# return bs.q
 	return form_data_dict
 
-# References
-@app.route("/references")
-def references():
-	return render_template('general_templates/references.html', title = 'aabbbs')
+@app.route("/quicksearch")
+def quicksearch():
+
+	form = QuicksearchForm()
+
+	return render_template('general_templates/quicksearch.html', form = form, title = 'Quicksearch')
+
+# Routing
+@app.route("/post_q", methods=['POST'])
+def post_q():
+
+	from modules.build_substring import BuildSubstring
+
+	form_data_dict = {
+		'q': request.form.get('q')}
+
+	# bs = BuildSubstring(form_data_dict)
 
 
+	# pass
+	# return bs.q
+	return form_data_dict
 
 if __name__ == '__main__':
 	app.run(debug = True, threaded = True)
