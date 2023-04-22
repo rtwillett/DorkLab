@@ -1,2 +1,5 @@
 venv/
 __pycache__/
+*.ipynb
+app/modules/__pycache__
+app/data/
