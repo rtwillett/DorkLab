@@ -5,7 +5,7 @@ import urllib
 import spacy
 nlp = spacy.load("en_core_web_lg")
 
-class BuildSubstring:
+class BuildSubstringGoogle:
     def __init__(self, data: dict):
         self.data = data
 
@@ -134,7 +134,7 @@ class BuildSubstring:
                 
     #     return self.links_dict
 
-class BuildStringYandex(BuildSubstring):
+class BuildStringYandex(BuildSubstringGoogle):
     
     def __init__(self, data):
         super().__init__(data)
