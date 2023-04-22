@@ -11,10 +11,6 @@ class BuildSubstring:
 
         self.q = self.build_full_string()
 
-    # def build_date_substring_(self, data: dict)->str:
-
-    #     if self.data['start_date'] != '':
-
     def and_logical_substring(self, col)->str:
         '''
         Docstring
