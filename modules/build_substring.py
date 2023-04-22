@@ -1,3 +1,7 @@
+import numpy as np
+import pandas as pd
+import spacy
+nlp = spacy.load("en_core_web_lg")
 class BuildSubstring:
     def __init__(self, data: dict):
         self.data = data
@@ -90,5 +94,71 @@ class BuildSubstring:
 
         return full_str
 
-def test():
-    print("test")
+class NERDString:
+    
+    def __init__(self, text:str, nlp = nlp):
+        
+        # self.nlp = spacy.load("en_core_web_lg")
+    
+        # text = text.upper()
+        
+        self.data = dict()
+
+        self.nlp = nlp
+        
+        self.text = text
+
+        self.doc = self.nlp(text)
+        
+        self.extract_ner()
+
+        self.ner_extracts = dict()
+#         for ent in self.entities.entity.unique():
+#             # print(ent)
+#             self.ner_extracts[ent] = self.summarize_entity_type(ent)
+
+        self.extract_persons()
+        self.extract_orgs()
+        self.extract_date()
+        self.extract_urls()
+            
+    def extract_ner(self):
+        ner_tuplist = []
+        for ent in self.doc.ents:
+            ner_tuplist.append((ent.text, ent.label_))
+            
+        self.entities = pd.DataFrame(ner_tuplist, columns = ['name', 'entity'])
+        
+    def summarize_entity_type(self, entity_type:str):
+        df_counts = pd.DataFrame(self.entities.loc[self.entities.entity == entity_type].groupby(['name', 'entity'])['name'].count())
+        # t.reset_index()
+        df_counts.columns = ['counts']
+        df_counts.reset_index()
+        df_counts = df_counts.sort_values('counts', ascending=False)
+        df_counts.reset_index(inplace=True)
+        df_counts.reset_index(drop=True, inplace=True)
+        return df_counts[['name', 'counts']]
+    
+    def extract_persons(self):
+        self.data['persons'] = self.entities.loc[self.entities.entity == 'PERSON'].name.tolist()
+        
+    def extract_orgs(self):
+        self.data['orgs'] = self.entities.loc[self.entities.entity == 'ORG'].name.tolist()
+    
+    def extract_date(self):
+        import re
+
+        dates_df = self.entities.loc[self.entities.entity == 'DATE']
+
+        date_series = dates_df.name.apply(lambda x: pd.to_datetime(re.sub('[A-Z]', '', x.upper())))
+        min_date_dt = date_series.min()
+        max_date_dt = date_series.max()
+
+        self.data['min_date'] = str(min_date_dt).split()[0]
+        self.data['max_date'] = str(max_date_dt).split()[0]
+
+#         return (f'Min date: {min_date}\nMax date: {max_date}')
+
+    def extract_urls(self):
+        import re
+        self.data['urls'] = [i for i in self.text.split() if ('.' in i) and ('@' not in i)]
