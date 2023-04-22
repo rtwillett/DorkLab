@@ -90,7 +90,7 @@ class BuildSubstring:
 
     def build_search_link(self)-> str:
         from urllib.parse import quote
-        
+
         return f"https://www.google.com/search?q={quote(self.q, safe='')}"
 
     # def build_search_engine_strings(self)-> dict:
@@ -98,13 +98,16 @@ class BuildSubstring:
     #     self.links_dict = {}
         
         
-    #     for engine in self.data["search_engines"]:
-    #         if engine == "google":
-    #             self.links_dict["google"] = self.build_search_link()
-    #         elif engine == "yandex":
-    #             bsy = BuildStringYandex(self.data)
-    #             self.links_dict["yandex"] = bsy.link
+        # for engine in self.data["search_engines"]:
+        #     if engine == "google":
+        #         self.links_dict["google"] = self.build_search_link()
+        #     elif engine == "yandex":
+        #         bsy = BuildStringYandex(self.data)
+        #         self.links_dict["yandex"] = bsy.link
         
+
+        self.links_dict["google"] = self.build_search_link()
+        self.links_dict["yandex"] = BuildStringYandex(self.data).link
                 
     #     return self.links_dict
 

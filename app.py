@@ -36,7 +36,7 @@ app.config.from_object(Config)
 @app.route("/home")
 def home():
 	form = UserInput()
-	return render_template('general_templates/dashboard.html', form=form, title = 'aaixlsop')
+	return render_template('general_templates/dashboard.html', form=form, title = 'Search')
 
 # Routing
 @app.route("/post_dork_inputs", methods=['POST'])
