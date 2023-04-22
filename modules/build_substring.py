@@ -23,7 +23,7 @@ class BuildSubstring:
         if self.data['root_terms'] == '':
             return ''
             
-        return " & ".join([f'"{f}"' for f in self.data['root_terms'].split("(,|;)")])
+        return " & ".join([f'"{f}"' for f in self.data['root_terms']])
 
 
     def build_filetype_substring(self)->str:
@@ -68,6 +68,8 @@ class BuildSubstring:
         Docstring
         '''
 
+        import re
+
         self.fragments = [
             self.build_root_substring(),
             self.build_date_substring(),
@@ -75,9 +77,14 @@ class BuildSubstring:
         ]
 
         # remove empty strings from the list before joining it
-        self.fragments = [list_item for list_item in self.fragments if list_item != ""]
+        self.fragments = [list_item for list_item in self.fragments if (list_item != "") or (list_item !="()")]
 
         full_str = ' & '.join(self.fragments)
+
+        # Removes & with nothing between them, empty parentheses and leading/trailing whitespace
+        # This should be revisited to make so that this cleaning is not necessary in the first place
+        full_str = re.sub('&\s{0,}&', '', full_str).replace('()', '').strip()
+
         return full_str
 
 
@@ -86,24 +93,20 @@ class BuildSubstring:
         
         return f"https://www.google.com/search?q={quote(self.q, safe='')}"
 
-
-
-    def build_search_engine_strings(self)-> dict:
+    # def build_search_engine_strings(self)-> dict:
         
-        self.links_dict = {}
+    #     self.links_dict = {}
         
         
-        for engine in self.data["search_engines"]:
-            if engine == "google":
-                self.links_dict["google"] = self.build_search_link()
-            elif engine == "yandex":
-                bsy = BuildStringYandex(self.data)
-                self.links_dict["yandex"] = bsy.link
+    #     for engine in self.data["search_engines"]:
+    #         if engine == "google":
+    #             self.links_dict["google"] = self.build_search_link()
+    #         elif engine == "yandex":
+    #             bsy = BuildStringYandex(self.data)
+    #             self.links_dict["yandex"] = bsy.link
         
                 
-        return self.links_dict
-
-import modules.build_substring
+    #     return self.links_dict
 
 class BuildStringYandex(BuildSubstring):
     

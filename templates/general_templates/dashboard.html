@@ -45,7 +45,7 @@
 		<section id="root_terms" class="row">
 			<h3 class="h4 mt-5 px-0">Filter by Terms</h3>
 			<div class="form-group">
-				{{ form.root_terms.label(class_ = 'col-form-label-lg px-0') }} <br />
+				{{ form.root_terms.label(class_ = 'col-form-label-md px-0') }} <br />
 				{{ form.root_terms(class_ = 'form-control', placeholder="Search something...") }}
 			</div>
 		</section>
@@ -53,12 +53,12 @@
 		<section id="timePeriod" class="row">
 			<h3 class="h4 mt-5 px-0">Filter by Time Period</h3>
 			<div class="form-group">
-				{{ form.start_date.label(class_ = 'col-form-label-lg px-0') }}
+				{{ form.start_date.label(class_ = 'col-form-label-md px-0') }}
 				{{ form.start_date(class_ = 'form-control') }}
 			</div>
 
 			<div class="form-group">
-				{{ form.end_date.label(class_ = 'col-form-label-lg px-0') }}
+				{{ form.end_date.label(class_ = 'col-form-label-md px-0') }}
 				{{ form.end_date(class_ = 'form-control') }}
 			</div>
 		</section>
@@ -72,7 +72,19 @@
 				</div>
 				<div>
 					<input type="checkbox" value="txt" class="danger" id="doc_txt" name='filetypes'>
-					<label for="doc_txt">txt</label>
+					<label for="doc_txt">TXT</label>
+				</div>
+				<div>
+					<input type="checkbox" value="csv" class="danger" id="doc_csv" name='filetypes'>
+					<label for="doc_csv">CSV</label>
+				</div>
+				<div>
+					<input type="checkbox" value="docx" class="danger" id="doc_docx" name='filetypes'>
+					<label for="doc_docx">DOCX</label>
+				</div>
+				<div>
+					<input type="checkbox" value="json" class="danger" id="doc_json" name='filetypes'>
+					<label for="doc_json">JSON</label>
 				</div>
 			</div>
 			
