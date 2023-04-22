@@ -77,9 +77,14 @@ def post_dork_inputs():
 
 @app.route("/results", methods=['POST', 'GET'])
 def results():
-	search_links = request.args.get('search_links')
+	import json
 
-	return render_template('general_templates/results.html', title = 'Results', results=search_links)
+	# convert string representation of dictionary to actual dictionary
+	search_links = request.args.get('search_links')
+	json_acceptable_string = search_links.replace("'", "\"")
+	search_links_dict = json.loads(json_acceptable_string)
+
+	return render_template('general_templates/results.html', title = 'Results', results=search_links_dict)
 
 
 # References
