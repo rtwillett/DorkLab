@@ -5,7 +5,7 @@ from flask import Flask, render_template, url_for, request, session, flash, redi
 
 # Importing all of the Blueprint objects into the application
 from flask_wtf.csrf import CSRFProtect
-from modules.build_substring import BuildSubstring, NERDString
+from modules.build_substring import BuildSubstringGoogle, NERDString
 
 from forms import UserInput, QuicksearchForm
 
@@ -61,7 +61,7 @@ def post_dork_inputs():
 	
 	# form_data_dict['filetypes'] = form_data_dict['filetypes'].split()
 
-	bs = BuildSubstring(form_data_dict)
+	bs = BuildSubstringGoogle(form_data_dict)
 
 	# return form_data_dict
 	return  bs.q
