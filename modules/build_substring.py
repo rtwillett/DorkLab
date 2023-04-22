@@ -1,6 +1,7 @@
 # import modules.build_substring_yandex
 import numpy as np
 import pandas as pd
+import urllib
 import spacy
 nlp = spacy.load("en_core_web_lg")
 
@@ -195,11 +196,21 @@ class NERDString:
         min_date_dt = date_series.min()
         max_date_dt = date_series.max()
 
-        self.data['min_date'] = str(min_date_dt).split()[0]
-        self.data['max_date'] = str(max_date_dt).split()[0]
+        min_date = str(min_date_dt).split()[0]
+        max_date = str(max_date_dt).split()[0]
+
+        if min_date != 'nan':
+            self.data['min_date'] = min_date
+        else:
+            self.data['min_date'] = ""
+
+        if max_date != 'nan':
+            self.data['max_date'] = max_date
+        else: 
+            self.data['max_date'] = ""
 
 #         return (f'Min date: {min_date}\nMax date: {max_date}')
 
     def extract_urls(self):
         import re
-        self.data['urls'] = [i for i in self.text.split() if ('.' in i) and ('@' not in i)]
+        self.data['urls'] = [i for i in self.text.split() if ('.' in i) and ('@' not in i) and (not re.search('\.$', i))]

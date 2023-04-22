@@ -39,7 +39,7 @@ class UserInputAP(FlaskForm):
 
 class QuicksearchForm(FlaskForm):
 
-    q = StringField('Additional Information', widget=widgets.TextArea()) #StringField('Entity', [DataRequired()])
+    q = StringField('Enter a query to build a string from', widget=widgets.TextArea()) #StringField('Entity', [DataRequired()])
 
     submit = SubmitField('Submit')
 

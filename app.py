@@ -7,7 +7,7 @@ from flask import Flask, render_template, url_for, request, session, flash, redi
 from flask_wtf.csrf import CSRFProtect
 from modules.build_substring import BuildSubstring
 
-from forms import UserInput, QuicksearchForm
+from forms import UserInput, QuicksearchForm, UserInputAP
 
 from modules.build_substring import BuildSubstring, NERDString
 
