@@ -1,57 +1,116 @@
-{% extends 'base_templates/dashboard_base.html' %}
 
-{%block dashboard_choice%}
-{%endblock%}
+{% extends 'base_templates/dashboard_base.html' %}
+{% block title %}{% endblock %}
+
+{% block testing %}
+<h3 class="horizontal-auto-margin">Tools</h3>
+
+<li class="nav-item">
+    <a class="nav-link ghost-button-blue" aria-current="page" href={{ url_for('landing')}}>
+        <span class="ml-2">Home</span>
+    </a>
+</li>
+
+<hr>
+
+<li class="nav-item">
+    <a class="nav-link ghost-button-blue" aria-current="page" onclick="addFormElement">
+        <span class="ml-2">Add a term</span><span>+</span>
+    </a>
+</li>
+<li class="nav-item">
+    <a class="nav-link ghost-button-blue" aria-current="page" onclick="addFormElement">
+        <span class="ml-2">Tab 2</span>
+    </a>
+</li>
+<li class="nav-item">
+    <a class="nav-link ghost-button-blue" aria-current="page" onclick="addFormElement">
+        <span class="ml-2">Tab 3</span>
+    </a>
+</li>
+<hr>
+
+</ul>
+{% endblock %}
 
 {% block content %}
-
 <main class="main-center">
-    <div class="container">
-        <h2>Enter Search Parameters</h2>
-        <form action="post_dork_inputs" method="POST">
-            {{ form.csrf_token }}
-            
-            <div class="form-group">
-                {{ form.root_terms.label(class_ = 'col-sm-2 col-form-label-lg') }}
-                <div class = "col-sm-6">
-                    {{ form.root_terms(class_ = 'form-control') }}
-                </div>
-            </div>
 
-            <div class="form-group">
-                {{ form.start_date.label(class_ = 'col-sm-2 col-form-label-lg') }}
-                <div class = "col-sm-6">
-                    {{ form.start_date(class_ = 'form-control') }}
-                </div>
-            </div>
+	
 
-            <div class="form-group">
-                {{ form.end_date.label(class_ = 'col-sm-2 col-form-label-lg') }}
-                <div class = "col-sm-6">
-                    {{ form.end_date(class_ = 'form-control') }}
-                </div>
-            </div>
+	<form action="post_dork_inputs" method="POST" class="container">
+		{{ form.hidden_tag() }}
 
-            <!-- https://stackoverflow.com/questions/53344797/how-create-an-array-with-checkboxes-in-flask -->
-            <div>
-                <input type="checkbox" value="pdf" class="danger" id="doc_pdf" name='filetypes'>
-                <label for="doc_pdf">PDF</label>
-            </div>
-            <div>
-                <input type="checkbox" value="txt" class="danger" id="txt" name='filetypes'>
-                <label for="doc_txt">txt</label>
-            </div>
-        
+		<section id="root_terms" class="row">
+			<h3 class="h4 mt-5 px-0">Filter by Terms</h3>
+			<div class="form-group">
+				{{ form.root_terms.label(class_ = 'col-form-label-lg px-0') }} <br />
+				{{ form.root_terms(class_ = 'form-control', placeholder="Search something...") }}
+			</div>
+		</section>
+
+		<section id="timePeriod" class="row">
+			<h3 class="h4 mt-5 px-0">Filter by Time Period</h3>
+			<div class="form-group">
+				{{ form.start_date.label(class_ = 'col-form-label-lg px-0') }}
+				{{ form.start_date(class_ = 'form-control') }}
+			</div>
+
+			<div class="form-group">
+				{{ form.end_date.label(class_ = 'col-form-label-lg px-0') }}
+				{{ form.end_date(class_ = 'form-control') }}
+			</div>
+		</section>
+
+		<section>
+			<h3 class="h4 mt-5 px-0">File Types</h3>
+			<div class="form-group">
+				<div>
+					<input type="checkbox" value="pdf" class="danger" id="doc_pdf" name='filetypes'>
+					<label for="doc_pdf">PDF</label>
+				</div>
+				<div>
+					<input type="checkbox" value="txt" class="danger" id="doc_txt" name='filetypes'>
+					<label for="doc_txt">txt</label>
+				</div>
+			</div>
+			
+		</section>
+
+		<section>
+			<h3 class="h4 mt-5 px-0">Include Links to:</h3>
+
+			<div class="form-group">
+
+				<div>
+					<input type="checkbox" value="pdf" class="danger" id="se_google" name="search_engines">
+					<label for="se_google">Google</label>
+				</div>
+				<div>
+					<input type="checkbox" value="txt" class="danger" id="se_yandex" name="search_engines">
+					<label for="se_yandex">Yandex</label>
+				</div>
+			</div>
 
 
-            <div class="form-group">
-                <div class = "col-sm-6">
-                    {{ form.submit(class_ = 'form-control') }}
-                </div>
-            </div>
+		</section>
 
-        </form>
-    </div>
+
+		{{ form.submit(class_ = 'form-control mt-5 btn btn-outline-dark') }}
+
+	</form>
+
+	{% block results %}
+		<h1>Your results  are {{ results }} </h1>
+	{% endblock %}
+
+	<script>
+		function addFormElement(e){
+			
+		}
+
+	</script>
+
 </main>
 
 {% endblock %}

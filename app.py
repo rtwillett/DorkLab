@@ -9,7 +9,7 @@ from modules.build_substring import BuildSubstring
 
 from forms import UserInput, QuicksearchForm
 
-from modules.build_substring import BuildSubstring, NERDString
+# from modules.build_substring import BuildSubstring, NERDString
 
 
 # from models import User
@@ -35,15 +35,8 @@ app.config.from_object(Config)
 @app.route("/")
 @app.route("/home")
 def home():
-
 	form = UserInput()
-
-	return render_template('general_templates/dashboard.html', form = form, title = 'Title')
-
-@app.route("/dashboard-ap")
-def dashboardAP():
-	form = UserInputAP()
-	return render_template('general_templates/dashboard-ap.html', form=form, title = 'aaixlsop')
+	return render_template('general_templates/dashboard.html', form=form, title = 'aaixlsop')
 
 # Routing
 @app.route("/post_dork_inputs", methods=['POST'])
@@ -52,18 +45,17 @@ def post_dork_inputs():
 	import re
 
 	form_data_dict = {
-		'root_terms': request.form.get('entity'),
-		'start_date': request.form.get('startdate'),
-		'end_date': request.form.get('enddate'),
-		'filetypes': request.form.get('doc_type'),
+		'root_terms': request.form.get('root_terms'),
+		'start_date': request.form.get('start_date'),
+		'end_date': request.form.get('end_date'),
+		'filetypes': request.form.get('filetypes'),
 		'search_engines': request.form.get('search_engines')
 	}
 
 	bs = BuildSubstring(form_data_dict)
 
-	#return form_data_dict
-	#return { "test" :str(type(bs.build_full_string()))}
-	return bs.build_search_engine_strings()
+	# return form_data_dict
+	return bs.q
 	# return render_template('general_templates/dashboard-ap.html', title = 'resuls', form=form, results=bs.build_full_string())
 
 # References
@@ -78,7 +70,7 @@ def quicksearch():
 
 	return render_template('general_templates/quicksearch.html', form = form, title = 'Quicksearch')
 
-# Routing
+#Routing
 @app.route("/post_q", methods=['POST'])
 def post_q():
 

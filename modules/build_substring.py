@@ -22,7 +22,7 @@ class BuildSubstring:
         if self.data['root_terms'] == '':
             return ''
             
-        return " & ".join([f'"{f}"' for f in self.data['root_terms']])
+        return " & ".join([f'"{f}"' for f in self.data['root_terms'].split("(,|;)")])
 
 
     def build_filetype_substring(self)->str:
@@ -31,7 +31,7 @@ class BuildSubstring:
         '''
     
         if self.data['filetypes'] != None:
-            ft_append = " | ".join([f'filetype:{f}' for f in self.data['filetypes']])
+            ft_append = " | ".join([f'filetype:{f}' for f in self.data['filetypes'].split(",")])
             return f"({ft_append})"
         else:
             return ''
@@ -135,6 +135,12 @@ class BuildStringYandex(BuildSubstring):
             return ""
         else: 
             print("If this is printed, something went wrong")
+
+
+    def build_search_link(self)-> str:
+        return f"https://yandex.com/search/?text={urllib.parse.quote(self.q, safe='')}"
+
+
 class NERDString:
     
     def __init__(self, text:str, nlp = nlp):

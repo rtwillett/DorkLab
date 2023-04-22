@@ -17,21 +17,21 @@ class MultiCheckboxField(SelectMultipleField):
     widget = widgets.ListWidget(prefix_label=False)
     option_widget = widgets.CheckboxInput()
 
+# class UserInput(FlaskForm):
+
+#     root_terms = StringField('Entity', [DataRequired()])
+#     start_date = DateField('Start Date')
+#     end_date = DateField('End Date')
+#     # filetype = SelectMultipleField('Subject Timeframe', choices = [('pdf', 'PDF'), ('txt', 'txt')])
+#     # filetype = MultiCheckboxField('Filetype', choices=['pdf', 'txt'])
+
+#     submit = SubmitField('Submit')
+
 class UserInput(FlaskForm):
 
-    root_terms = StringField('Entity', [DataRequired()])
-    start_date = DateField('Start Date')
-    end_date = DateField('End Date')
-    # filetype = SelectMultipleField('Subject Timeframe', choices = [('pdf', 'PDF'), ('txt', 'txt')])
-    # filetype = MultiCheckboxField('Filetype', choices=['pdf', 'txt'])
-
-    submit = SubmitField('Submit')
-
-class UserInputAP(FlaskForm):
-
-    entity = StringField("Enter your search terms: ",[DataRequired()])
-    startdate = DateField('Start Date: ')
-    enddate = DateField('End Date: ')
+    root_terms = StringField("Enter your search terms: ",[DataRequired()])
+    start_date = DateField('Start Date: ')
+    end_date = DateField('End Date: ')
     filetype = MultiCheckboxField('Filetype', choices=['pdf', 'txt'])
     search_engines = MultiCheckboxField('Label', choices=["google", "yandex"])
 
