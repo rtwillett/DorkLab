@@ -1,7 +1,13 @@
-class BuildStringYandex(BuildSubstring):
+import modules.build_substring
+
+class BuildStringYandex(modules.build_substring.BuildSubstring):
+    
     def __init__(self, data):
-        self.data = data
         super().__init__(data)
+
+        self.data = data
+        self.q = self.build_full_string()
+        
         
     def build_filetype_substring(self)->str:
         '''

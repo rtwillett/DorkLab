@@ -33,6 +33,8 @@ class UserInputAP(FlaskForm):
     entity = StringField("Enter your search terms: ",[DataRequired()])
     startdate = DateField('Start Date: ')
     enddate = DateField('End Date: ')
+    filetype = MultiCheckboxField('Filetype', choices=['pdf', 'txt'])
+    search_engines = MultiCheckboxField('Label', choices=["google", "yandex"])
 
     submit = SubmitField('Search')
 

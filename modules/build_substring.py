@@ -1,3 +1,6 @@
+import modules.build_substring_yandex
+
+
 class BuildSubstring:
     def __init__(self, data: dict):
         self.data = data
@@ -72,16 +75,22 @@ class BuildSubstring:
         return full_str
 
 
+    def build_search_link(self)-> str:
+        return f"https://www.google.com/search?q={urllib.parse.quote(self.q, safe='')}"
+
+
     def build_search_engine_strings(self)-> dict:
         
+        print(self.data)
         res = {}
         
         
         for engine in self.data["search_engines"]:
             if engine == "google":
-                res["google"] = self.q
+                res["google"] = self.build_date_substring()
             elif engine == "yandex":
-                res["yandex"] = BuildStringYandex(self.data).q
+                bsy = modules.build_substring_yandex.BuildStringYandex(self.data)
+                res["yandex"] = bsy.q
                 
         return res
 
