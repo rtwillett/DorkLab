@@ -33,7 +33,7 @@ Flask-WTF==1.1.1
 fqdn==1.5.1
 gunicorn==20.1.0
 idna==3.4
-ipykernel==6.22.0
+ipykernel==6.16.2
 ipython==8.12.0
 ipython-genutils==0.2.0
 ipywidgets==8.0.6
