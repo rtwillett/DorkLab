@@ -52,13 +52,19 @@ def post_dork_inputs():
 		# 'search_engines': request.form.getlist('search_engines')
 	}
 
+	ns = NERDString(form_data_dict['root_terms'])
+
 	form_data_dict['root_terms'] = re.split('[,;:]', form_data_dict['root_terms'])
+	form_data_dict['persons'] = ns.data['persons']
+	form_data_dict['orgs'] = ns.data['orgs']
+	form_data_dict['gpe'] = ns.data['gpe']
+	
 	# form_data_dict['filetypes'] = form_data_dict['filetypes'].split()
 
 	bs = BuildSubstring(form_data_dict)
 
-	return form_data_dict
-	# return  bs.q
+	# return form_data_dict
+	return  bs.q
 	# return render_template('general_templates/dashboard.html', title = 'Results', results=search_links_dict)
 
 # References

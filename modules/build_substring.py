@@ -15,6 +15,16 @@ class BuildSubstring:
 
     #     if self.data['start_date'] != '':
 
+    def and_logical_substring(self, col)->str:
+        '''
+        Docstring
+        '''
+    
+        if self.data[col] == '':
+            return ''
+            
+        return " & ".join([f'"{f}"' for f in self.data[col]])
+
     def build_root_substring(self)->str:
         '''
         Docstring
@@ -24,6 +34,20 @@ class BuildSubstring:
             return ''
             
         return " & ".join([f'"{f}"' for f in self.data['root_terms']])
+
+    def build_persons_substring(self)->str:
+
+        if self.data['persons'] == []:
+            return ''
+            
+        return " & ".join([f'"{f}"' for f in self.data['persons']])
+
+    def build_persons_substring(self)->str:
+
+        if self.data['gpe'] == []:
+            return ''
+            
+        return " & ".join([f'"{f}"' for f in self.data['gpe']])
 
 
     def build_filetype_substring(self)->str:
@@ -71,7 +95,9 @@ class BuildSubstring:
         import re
 
         self.fragments = [
-            self.build_root_substring(),
+            self.and_logical_substring('persons'),
+            self.and_logical_substring('orgs'),
+            self.and_logical_substring('gpe'),
             self.build_date_substring(),
             self.build_filetype_substring()
         ]
