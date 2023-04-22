@@ -8,6 +8,9 @@ from flask_wtf.csrf import CSRFProtect
 
 from forms import UserInput, QuicksearchForm
 
+from modules.build_substring import BuildSubstring, NERDString
+
+
 # from models import User
 
 class Config(object):
@@ -40,7 +43,6 @@ def home():
 @app.route("/post_dork_inputs", methods=['POST'])
 def post_dork_inputs():
 
-	from modules.build_substring import BuildSubstring
 	import re
 
 	form_data_dict = {
@@ -54,8 +56,8 @@ def post_dork_inputs():
 
 
 	# pass
-	# return bs.q
-	return form_data_dict
+	return bs.q
+	# return form_data_dict
 
 @app.route("/quicksearch")
 def quicksearch():
@@ -73,12 +75,12 @@ def post_q():
 	form_data_dict = {
 		'q': request.form.get('q')}
 
-	# bs = BuildSubstring(form_data_dict)
+	ns = NERDString(form_data_dict['q'])
 
 
 	# pass
-	# return bs.q
-	return form_data_dict
+	return ns.data
+	# return form_data_dict
 
 if __name__ == '__main__':
 	app.run(debug = True, threaded = True)
