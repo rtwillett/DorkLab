@@ -10,10 +10,10 @@ a:hover {
 
 /* Dealing with the nav bar and the drop down hamburger */
 #nav_bar{
-    background-color: #fff;
+    /* background-color: #fff;
     border-bottom: #3B4868;
     border-bottom: solid;
-    font-weight:bold;
+    font-weight:bold; */
     height: 30px;
     font-size:20px;
     color: #042430;
@@ -133,8 +133,8 @@ input[type="radio"] {
 
 footer {
     padding-top: 10px;
-    background-color: #fff;
-    color: #7A7A7A;
+    background-color: #020c36;
+    /* color: #7A7A7A; */
     font-family:'Roboto', sans-serif;
 }
 
@@ -158,5 +158,5 @@ td {
 
 .separator {
     height: 5px;
-    background-color: #042430;
+    /* background-color: #042430; */
 }

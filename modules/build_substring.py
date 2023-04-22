@@ -1,7 +1,9 @@
+import modules.build_substring_yandex
 import numpy as np
 import pandas as pd
 import spacy
 nlp = spacy.load("en_core_web_lg")
+
 class BuildSubstring:
     def __init__(self, data: dict):
         self.data = data
@@ -17,17 +19,18 @@ class BuildSubstring:
         Docstring
         '''
     
-        if len(self.data['root_terms']) > 0:
-            return " & ".join([f'"{f}"' for f in self.data['root_terms']])
-        else:
+        if self.data['root_terms'] == '':
             return ''
+            
+        return " & ".join([f'"{f}"' for f in self.data['root_terms']])
+
 
     def build_filetype_substring(self)->str:
         '''
         Docstring
         '''
     
-        if len(self.data['filetypes']) > 0:
+        if self.data['filetypes'] != None:
             ft_append = " | ".join([f'filetype:{f}' for f in self.data['filetypes']])
             return f"({ft_append})"
         else:
@@ -39,8 +42,12 @@ class BuildSubstring:
         Docstring
         '''
         
-        start_dt = self.data["start_date"]
-        end_dt = self.data["end_date"]
+        if self.data["start_date"]: start_dt = self.data["start_date"]
+        else: start_dt = ""
+
+        if self.data["end_date"]: end_dt = self.data["end_date"]
+        else: end_dt = ""
+
         
         if start_dt != "" and end_dt != "":
             return f'after:{start_dt} & before:{end_dt}'
@@ -53,12 +60,7 @@ class BuildSubstring:
         else: 
             print("What is this even?")
 
-    # def build_date_substring(self, date: str, isStartDate: bool)->str:
-        
-    #     if isStartDate:
-    #         return f'(after:{date})'
-    #     else:
-    #         return f'(before:{date})'
+
 
     def build_full_string(self)->str:
         '''
@@ -72,27 +74,29 @@ class BuildSubstring:
         ]
 
         full_str = ' & '.join(self.fragments)
+        return full_str
 
 
-    # def build_full_string_AP(self, data:dict)->str:
-    #     full_str = ""
-
-    #     for key in data:
-
-    #         if key == "root_terms":
-    #             full_str += " ".join(data[key])
-    #         elif key == "start_date":
-    #             full_str += self.build_date_substring()
-    #         elif key == "end_date":
-    #             full_str += self.build_date_substring()
-    #         elif key == "filetypes":
-    #             full_str += self.build_filetype_substring()
-            
-    #         full_str += " "
-            
-
+    def build_search_link(self)-> str:
+        return f"https://www.google.com/search?q={urllib.parse.quote(self.q, safe='')}"
 
         return full_str
+
+    def build_search_engine_strings(self)-> dict:
+        
+        print(self.data)
+        res = {}
+        
+        
+        for engine in self.data["search_engines"]:
+            if engine == "google":
+                res["google"] = self.build_date_substring()
+            elif engine == "yandex":
+                bsy = modules.build_substring_yandex.BuildStringYandex(self.data)
+                res["yandex"] = bsy.q
+                
+        return res
+
 
 class NERDString:
     
