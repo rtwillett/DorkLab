@@ -5,9 +5,9 @@ from flask import Flask, render_template, url_for, request, session, flash, redi
 
 # Importing all of the Blueprint objects into the application
 from flask_wtf.csrf import CSRFProtect
-from modules.build_substring import BuildSubstring
+from modules.build_substring import BuildSubstring, NERDString
 
-from forms import UserInput, QuicksearchForm, UserInputAP
+from forms import UserInput, QuicksearchForm
 
 # from modules.build_substring import BuildSubstring, NERDString
 
@@ -48,16 +48,18 @@ def post_dork_inputs():
 		'root_terms': request.form.get('root_terms'),
 		'start_date': request.form.get('start_date'),
 		'end_date': request.form.get('end_date'),
-		'filetypes': request.form.getlist('filetypes'),
-		'search_engines': request.form.getlist('search_engines')
+		'filetypes': request.form.getlist('filetypes')
+		# 'search_engines': request.form.getlist('search_engines')
 	}
 
+	form_data_dict['root_terms'] = re.split('[,;:]', form_data_dict['root_terms'])
+	# form_data_dict['filetypes'] = form_data_dict['filetypes'].split()
+
 	bs = BuildSubstring(form_data_dict)
-	search_links_dict = bs.build_search_engine_strings()
 
 	# return form_data_dict
-	# return bs.build_search_engine_strings()
-	return render_template('general_templates/dashboard.html', title = 'Results', results=search_links_dict)
+	return  bs.q
+	# return render_template('general_templates/dashboard.html', title = 'Results', results=search_links_dict)
 
 # References
 @app.route("/about")

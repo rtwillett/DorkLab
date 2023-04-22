@@ -32,14 +32,14 @@ class UserInput(FlaskForm):
     root_terms = StringField("Enter your search terms: ",[DataRequired()])
     start_date = DateField('Start Date: ')
     end_date = DateField('End Date: ')
-    filetype = MultiCheckboxField('Filetype', choices=['pdf', 'txt'])
-    search_engines = MultiCheckboxField('Search Engines', choices=["google", "yandex"])
+    filetype = MultiCheckboxField('Filetype', choices=['pdf', 'txt', 'docx', 'csv'])
+    # search_engines = MultiCheckboxField('Search Engines', choices=["google", "yandex"])
 
     submit = SubmitField('Search')
 
 class QuicksearchForm(FlaskForm):
 
-    q = StringField('Enter a query to build a string from', widget=widgets.TextArea()) #StringField('Entity', [DataRequired()])
+    q = StringField('Enter a query to build a string from', widget=widgets.TextArea(), validators=[DataRequired()])
 
     submit = SubmitField('Submit')
 
