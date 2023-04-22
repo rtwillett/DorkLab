@@ -15,6 +15,16 @@ class BuildSubstring:
 
     #     if self.data['start_date'] != '':
 
+    def and_logical_substring(self, col)->str:
+        '''
+        Docstring
+        '''
+    
+        if self.data[col] == '':
+            return ''
+            
+        return " & ".join([f'"{f}"' for f in self.data[col]])
+
     def build_root_substring(self)->str:
         '''
         Docstring
@@ -24,6 +34,20 @@ class BuildSubstring:
             return ''
             
         return " & ".join([f'"{f}"' for f in self.data['root_terms']])
+
+    def build_persons_substring(self)->str:
+
+        if self.data['persons'] == []:
+            return ''
+            
+        return " & ".join([f'"{f}"' for f in self.data['persons']])
+
+    def build_persons_substring(self)->str:
+
+        if self.data['gpe'] == []:
+            return ''
+            
+        return " & ".join([f'"{f}"' for f in self.data['gpe']])
 
 
     def build_filetype_substring(self)->str:
@@ -71,7 +95,9 @@ class BuildSubstring:
         import re
 
         self.fragments = [
-            self.build_root_substring(),
+            self.and_logical_substring('persons'),
+            self.and_logical_substring('orgs'),
+            self.and_logical_substring('gpe'),
             self.build_date_substring(),
             self.build_filetype_substring()
         ]
@@ -178,8 +204,10 @@ class NERDString:
 
         self.extract_persons()
         self.extract_orgs()
+        self.extract_gpe()
         self.extract_date()
         self.extract_urls()
+        self.extract_filetypes()
             
     def extract_ner(self):
         ner_tuplist = []
@@ -203,6 +231,13 @@ class NERDString:
         
     def extract_orgs(self):
         self.data['orgs'] = self.entities.loc[self.entities.entity == 'ORG'].name.tolist()
+
+    def extract_gpe(self):
+        self.data['gpe'] = self.entities.loc[self.entities.entity == 'GPE'].name.tolist()
+
+    def extract_filetypes(self):
+        import re
+        self.data['filetypes'] = re.findall('pdf|txt| doc[x]{0,1}|json', self.text)
     
     def extract_date(self):
         import re
