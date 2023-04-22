@@ -73,7 +73,14 @@ def post_dork_inputs():
 
 	# return form_data_dict
 	# return  bs.q
-	return render_template('general_templates/dashboard.html', title = 'Results', results=search_links_dict)
+	return redirect(url_for('results', search_links = search_links_dict))
+
+@app.route("/results", methods=['POST', 'GET'])
+def results():
+	search_links = request.args.get('search_links')
+
+	return render_template('general_templates/results.html', title = 'Results', results=search_links)
+
 
 # References
 @app.route("/about")
