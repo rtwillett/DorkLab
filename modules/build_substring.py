@@ -2,6 +2,7 @@
 import numpy as np
 import pandas as pd
 import spacy
+from urllib.parse import quote
 nlp = spacy.load("en_core_web_lg")
 
 class BuildSubstring:
@@ -31,7 +32,7 @@ class BuildSubstring:
         '''
     
         if self.data['filetypes'] != None:
-            ft_append = " | ".join([f'filetype:{f}' for f in self.data['filetypes'].split(",")])
+            ft_append = " | ".join([f'filetype:{f}' for f in self.data['filetypes']])
             return f"({ft_append})"
         else:
             return ''
@@ -73,14 +74,17 @@ class BuildSubstring:
             self.build_filetype_substring()
         ]
 
+        # remove empty strings from the list before joining it
+        self.fragments = [list_item for list_item in self.fragments if list_item != ""]
+
         full_str = ' & '.join(self.fragments)
         return full_str
 
 
     def build_search_link(self)-> str:
-        return f"https://www.google.com/search?q={urllib.parse.quote(self.q, safe='')}"
+        return f"https://www.google.com/search?q={quote(self.q, safe='')}"
 
-        return full_str
+
 
     def build_search_engine_strings(self)-> dict:
         
@@ -89,11 +93,14 @@ class BuildSubstring:
         
         
         for engine in self.data["search_engines"]:
+            print("engine is " + engine)
             if engine == "google":
-                res["google"] = self.build_date_substring()
+                res["google"] = self.build_search_link()
             elif engine == "yandex":
-                bsy = modules.build_substring_yandex.BuildStringYandex(self.data)
-                res["yandex"] = bsy.q
+                bsy = BuildStringYandex(self.data)
+                res["yandex"] = bsy.build_search_link()
+        
+        print("res is " + str(res))
                 
         return res
 
@@ -118,6 +125,7 @@ class BuildStringYandex(BuildSubstring):
         else:
             return ''
         
+
     def build_date_substring(self)->str:
         '''
         Docstring
@@ -138,7 +146,7 @@ class BuildStringYandex(BuildSubstring):
 
 
     def build_search_link(self)-> str:
-        return f"https://yandex.com/search/?text={urllib.parse.quote(self.q, safe='')}"
+        return f"https://yandex.com/search/?text={quote(self.q, safe='')}"
 
 
 class NERDString:

@@ -33,7 +33,7 @@ class UserInput(FlaskForm):
     start_date = DateField('Start Date: ')
     end_date = DateField('End Date: ')
     filetype = MultiCheckboxField('Filetype', choices=['pdf', 'txt'])
-    search_engines = MultiCheckboxField('Label', choices=["google", "yandex"])
+    search_engines = MultiCheckboxField('Search Engines', choices=["google", "yandex"])
 
     submit = SubmitField('Search')
 

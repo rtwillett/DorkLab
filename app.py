@@ -48,14 +48,14 @@ def post_dork_inputs():
 		'root_terms': request.form.get('root_terms'),
 		'start_date': request.form.get('start_date'),
 		'end_date': request.form.get('end_date'),
-		'filetypes': request.form.get('filetypes'),
-		'search_engines': request.form.get('search_engines')
+		'filetypes': request.form.getlist('filetypes'),
+		'search_engines': request.form.getlist('search_engines')
 	}
 
 	bs = BuildSubstring(form_data_dict)
 
 	# return form_data_dict
-	return bs.q
+	return bs.build_search_engine_strings()
 	# return render_template('general_templates/dashboard-ap.html', title = 'resuls', form=form, results=bs.build_full_string())
 
 # References
