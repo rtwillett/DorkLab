@@ -22,7 +22,7 @@ class BuildSubstring:
         if self.data['root_terms'] == '':
             return ''
             
-        return " & ".join([f'"{f}"' for f in self.data['root_terms']])
+        return " & ".join([f'"{f}"' for f in self.data['root_terms'].split("(,|;)")])
 
 
     def build_filetype_substring(self)->str:
@@ -73,29 +73,34 @@ class BuildSubstring:
             self.build_filetype_substring()
         ]
 
+        # remove empty strings from the list before joining it
+        self.fragments = [list_item for list_item in self.fragments if list_item != ""]
+
         full_str = ' & '.join(self.fragments)
         return full_str
 
 
     def build_search_link(self)-> str:
-        return f"https://www.google.com/search?q={urllib.parse.quote(self.q, safe='')}"
+        from urllib.parse import quote
+        
+        return f"https://www.google.com/search?q={quote(self.q, safe='')}"
 
-        return full_str
+
 
     def build_search_engine_strings(self)-> dict:
         
-        print(self.data)
-        res = {}
+        self.links_dict = {}
         
         
         for engine in self.data["search_engines"]:
             if engine == "google":
-                res["google"] = self.build_date_substring()
+                self.links_dict["google"] = self.build_search_link()
             elif engine == "yandex":
-                bsy = modules.build_substring_yandex.BuildStringYandex(self.data)
-                res["yandex"] = bsy.q
+                bsy = BuildStringYandex(self.data)
+                self.links_dict["yandex"] = bsy.link
+        
                 
-        return res
+        return self.links_dict
 
 import modules.build_substring
 
@@ -105,7 +110,7 @@ class BuildStringYandex(BuildSubstring):
         super().__init__(data)
 
         self.data = data
-        self.q = self.build_full_string()
+        self.link = self.build_search_link()
         
         
     def build_filetype_substring(self)->str:
@@ -118,6 +123,7 @@ class BuildStringYandex(BuildSubstring):
         else:
             return ''
         
+
     def build_date_substring(self)->str:
         '''
         Docstring
@@ -135,6 +141,14 @@ class BuildStringYandex(BuildSubstring):
             return ""
         else: 
             print("If this is printed, something went wrong")
+
+
+    def build_search_link(self)-> str:
+        from urllib.parse import quote
+
+        return f"https://yandex.com/search/?text={quote(self.q, safe='')}"
+
+
 class NERDString:
     
     def __init__(self, text:str, nlp = nlp):
