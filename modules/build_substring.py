@@ -2,7 +2,6 @@
 import numpy as np
 import pandas as pd
 import spacy
-from urllib.parse import quote
 nlp = spacy.load("en_core_web_lg")
 
 class BuildSubstring:
@@ -82,27 +81,26 @@ class BuildSubstring:
 
 
     def build_search_link(self)-> str:
+        from urllib.parse import quote
+        
         return f"https://www.google.com/search?q={quote(self.q, safe='')}"
 
 
 
     def build_search_engine_strings(self)-> dict:
         
-        print(self.data)
-        res = {}
+        self.links_dict = {}
         
         
         for engine in self.data["search_engines"]:
-            print("engine is " + engine)
             if engine == "google":
-                res["google"] = self.build_search_link()
+                self.links_dict["google"] = self.build_search_link()
             elif engine == "yandex":
                 bsy = BuildStringYandex(self.data)
-                res["yandex"] = bsy.build_search_link()
+                self.links_dict["yandex"] = bsy.link
         
-        print("res is " + str(res))
                 
-        return res
+        return self.links_dict
 
 import modules.build_substring
 
@@ -112,7 +110,7 @@ class BuildStringYandex(BuildSubstring):
         super().__init__(data)
 
         self.data = data
-        self.q = self.build_full_string()
+        self.link = self.build_search_link()
         
         
     def build_filetype_substring(self)->str:
@@ -146,6 +144,8 @@ class BuildStringYandex(BuildSubstring):
 
 
     def build_search_link(self)-> str:
+        from urllib.parse import quote
+
         return f"https://yandex.com/search/?text={quote(self.q, safe='')}"
 
 

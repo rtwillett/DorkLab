@@ -72,8 +72,10 @@
         </div>
       </nav>
       <main class="col-md-9 ml-sm-auto col-lg-10 px-md-4 py-4" style="margin-left: 200px">
-        {% block content %}{% endblock %}
-        {% block results %}{% endblock %}
+        {% block content %}
+          {% block search_links %}{% endblock %}
+        {% endblock %}
+        
       </main>
     </div>
   </div>

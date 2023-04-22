@@ -37,8 +37,9 @@
 <main class="main-center">
 
 	
-
+	{% if form %}
 	<form action="post_dork_inputs" method="POST" class="container">
+		
 		{{ form.hidden_tag() }}
 
 		<section id="root_terms" class="row">
@@ -100,17 +101,18 @@
 		{{ form.submit(class_ = 'form-control mt-5 btn btn-outline-dark') }}
 
 	</form>
+	{% endif %}
 
-	{% block results %}
-		<h1>Your results  are {{ results }} </h1>
+	{% block search_links %}
+		{% if results %}
+		<h1 class="py-4">Your Results Are Below</h1>
+
+		
+		<a href="{{results['google']}}" class="btn btn-outline-primary">Google Search</a>
+		<a href="{{results['yandex']}}" class="btn btn-outline-primary">Yandex Search</a>
+
+		{% endif %}
 	{% endblock %}
-
-	<script>
-		function addFormElement(e){
-			
-		}
-
-	</script>
 
 </main>
 
