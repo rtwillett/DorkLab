@@ -1,0 +1,162 @@
+a {
+    color: #042430;
+}
+
+a:hover {
+    color: white;
+    background-color: #042430;
+    
+}
+
+/* Dealing with the nav bar and the drop down hamburger */
+#nav_bar{
+    /* background-color: #fff;
+    border-bottom: #3B4868;
+    border-bottom: solid;
+    font-weight:bold; */
+    height: 30px;
+    font-size:20px;
+    color: #042430;
+    text-align: right;
+    padding-right: 50px;
+    }
+
+#nav_bar_l{
+    background-color: #fff;
+    border-bottom: #3B4868;
+    border-bottom: solid;
+    font-weight:bold;
+    height: 30px;
+    font-size:20px;
+    color: #042430;
+    text-align: left;
+    padding-right: 50px;
+    }
+
+ul#menu li {
+    display: inline;
+    margin-left: 10px;
+}
+
+.dropdown-menu.show{
+    display:block !important; 
+    position:absolute;
+    float:right;
+    right: 0;
+}
+
+.navbar-toggler{
+    background-color:#042430;
+}
+
+
+.sticky {
+    position: fixed;
+    top: 0;
+    width: 100%;
+  }
+
+.sticky + .content {
+    padding-top: 60px;
+}
+
+body{
+    font-family:'Roboto', sans-serif;
+    font-size: 16px;
+    background-color:#fff;
+    margin:0;
+    height:100%;
+    width:100%;
+    }
+
+
+
+.button {
+    font-weight:bold;
+    border: none;
+    padding: 2%;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 20px;
+    display: block;
+    width: 100%;
+    margin:auto;
+    background-color: #A9B3CE;
+    color: #042430;
+    }
+
+input[type="radio"] {
+    -ms-transform: scale(1.5); /* IE 9 */
+    -webkit-transform: scale(1.5); /* Chrome, Safari, Opera */
+    transform: scale(1.5);
+}
+
+
+
+
+
+.main-center{
+    display: block;
+    padding: 10%;
+    width: 50%;
+    margin:auto;
+    background-color: #fff;
+}
+
+.form-label {
+    font-weight: bold;
+    font-size: 18px;
+}
+
+.leftcol {
+    float: left;
+    width:49%;
+}
+
+.rightcol {
+    float: right;
+    width:49%;
+}
+
+#logo-header {
+    height: 100px;
+    margin: auto;
+    display: block;
+    
+}
+
+.nerdoc-button {
+    background-color: #1c470a;
+    color: #fff;
+}
+
+footer {
+    padding-top: 10px;
+    background-color: #020c36;
+    /* color: #7A7A7A; */
+    font-family:'Roboto', sans-serif;
+}
+
+.left-footer {
+    /*margin-left: 10px;*/
+    padding: 10px;
+    margin: auto;
+}
+
+.right-footer {
+    /*margin-left: 10px;*/
+    padding: 10px;
+    margin: auto;
+}
+
+td {
+    padding: 5px;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+.separator {
+    height: 5px;
+    /* background-color: #042430; */
+}

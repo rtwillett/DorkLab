@@ -1,0 +1,24 @@
+
+{% extends 'base_templates/layout.html' %}
+
+{% block topnavright %}
+<ul id="menu">
+	<li><a href="https://github.com/rtwillett/NERDoc" target="_blank"><img src="{{ url_for('static', filename='images/github.ico') }}" style="height: 25px"></a></li>
+	<li>|</li>
+	<li><a href= "">NER</a></li>
+	<li>|</li>
+	<li><a href= "">OCR</a></li>
+	<li>|</li>
+	<li><a href= "{{ url_for('references') }}">References</a></li>
+</ul>
+{% endblock %}
+
+
+{% block content %}
+<main class="main-center">
+	<h2>References</h2>
+	<p>Here are some references</p>
+
+</main>
+
+{% endblock %}
