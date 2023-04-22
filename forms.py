@@ -19,14 +19,13 @@ class MultiCheckboxField(SelectMultipleField):
 
 class UserInput(FlaskForm):
 
-    entity = StringField('Entity', [DataRequired()])
-    startdate = DateField('Start Date')
-    enddate = DateField('End Date')
+    root_terms = StringField('Entity', [DataRequired()])
+    start_date = DateField('Start Date')
+    end_date = DateField('End Date')
     # filetype = SelectMultipleField('Subject Timeframe', choices = [('pdf', 'PDF'), ('txt', 'txt')])
     # filetype = MultiCheckboxField('Filetype', choices=['pdf', 'txt'])
 
     submit = SubmitField('Submit')
-
 
 class UserInputAP(FlaskForm):
 
@@ -37,5 +36,11 @@ class UserInputAP(FlaskForm):
     search_engines = MultiCheckboxField('Label', choices=["google", "yandex"])
 
     submit = SubmitField('Search')
+
+class QuicksearchForm(FlaskForm):
+
+    q = StringField('Additional Information', widget=widgets.TextArea()) #StringField('Entity', [DataRequired()])
+
+    submit = SubmitField('Submit')
 
 
