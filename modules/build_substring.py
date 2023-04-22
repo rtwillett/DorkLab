@@ -178,8 +178,10 @@ class NERDString:
 
         self.extract_persons()
         self.extract_orgs()
+        self.extract_gpe()
         self.extract_date()
         self.extract_urls()
+        self.extract_filetypes()
             
     def extract_ner(self):
         ner_tuplist = []
@@ -203,6 +205,13 @@ class NERDString:
         
     def extract_orgs(self):
         self.data['orgs'] = self.entities.loc[self.entities.entity == 'ORG'].name.tolist()
+
+    def extract_gpe(self):
+        self.data['gpe'] = self.entities.loc[self.entities.entity == 'GPE'].name.tolist()
+
+    def extract_filetypes(self):
+        import re
+        self.data['filetypes'] = re.findall('pdf|txt| doc[x]{0,1}|json', self.text)
     
     def extract_date(self):
         import re
