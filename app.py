@@ -47,8 +47,8 @@ def post_dork_inputs():
 
 	bs = BuildSubstring(form_data_dict)
 
-	# return form_data_dict
-	return  bs.q
+	return form_data_dict
+	# return  bs.q
 	# return render_template('general_templates/dashboard.html', title = 'Results', results=search_links_dict)
 
 # References

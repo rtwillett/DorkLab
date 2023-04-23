@@ -21,6 +21,16 @@ class BuildSubstring:
             
         return " & ".join([f'"{f}"' for f in self.data[col]])
 
+    def or_logical_substring(self, col)->str:
+        '''
+        Docstring
+        '''
+    
+        if self.data[col] == '':
+            return ''
+            
+        return " | ".join([f'"{f}"' for f in self.data[col]])
+
     def build_root_substring(self)->str:
         '''
         Docstring
@@ -53,7 +63,18 @@ class BuildSubstring:
     
         if self.data['filetypes'] != None:
             ft_append = " | ".join([f'filetype:{f}' for f in self.data['filetypes']])
-            return f"({ft_append})"
+            return f"{ft_append}"
+        else:
+            return ''
+
+    def build_site_substring(self)->str:
+        '''
+        Docstring
+        '''
+    
+        if self.data['urls'] != None:
+            ft_append = " | ".join([f'site:{f}' for f in self.data['urls']])
+            return f"{ft_append}"
         else:
             return ''
 
@@ -91,9 +112,9 @@ class BuildSubstring:
         import re
 
         self.fragments = [
-            self.and_logical_substring('persons'),
-            self.and_logical_substring('orgs'),
-            self.and_logical_substring('gpe'),
+            "(" + self.or_logical_substring('persons') + ")",
+            "(" + self.or_logical_substring('orgs') + ")",
+            "(" + self.or_logical_substring('gpe') + ")",
             self.build_date_substring(),
             self.build_filetype_substring()
         ]
