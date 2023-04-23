@@ -71,7 +71,9 @@ def post_dork_inputs():
 
 	# return form_data_dict
 	# return  bs.q
-	return redirect(url_for('results', search_links = search_links_dict))
+	# return redirect(url_for('results', search_links = search_links_dict))
+	# return search_links_dict
+	return render_template('general_templates/results2.html', title = 'Results', results=search_links_dict)
 
 @app.route("/results", methods=['POST', 'GET'])
 def results():
@@ -97,7 +99,7 @@ def quicksearch():
 	return render_template('general_templates/quicksearch.html', form = form, title = 'Quicksearch')
 
 #Routing
-@app.route("/post_q", methods=['POST'])
+@app.route("/post_q", methods=['POST', 'GET'])
 def post_q():
 
 	# from modules.build_substring import BuildSubstring
@@ -119,20 +121,31 @@ def post_q():
 	form_data_dict['moreterms'] = []
 	form_data_dict['filterwords'] = []
 
-	bsg = BuildSubstringGoogle(form_data_dict).build_search_link()
-	bsy = BuildSubstringYandex(form_data_dict).build_search_link()
-	bsb = BuildSubstringBing(form_data_dict).build_search_link()
+	bsg = BuildSubstringGoogle(form_data_dict)
+	bsy = BuildSubstringYandex(form_data_dict)
+	bsb = BuildSubstringBing(form_data_dict)
 
 	search_links_dict = {
-		"google": bsg,
-		"yandex": bsy,
-		"bing": bsb
+		"google": {
+			"link": bsg.build_search_link(),
+			"query": bsg.q
+		},
+		"yandex": {
+			"link": bsy.build_search_link(),
+			"query": bsy.q
+		},
+		"bing": {
+			"link": bsb.build_search_link(),
+			"query": bsb.q
+		}
 	}
 
 	# pass
 	# return ns.data
-	# return form_data_dict
-	return redirect(url_for('results', search_links = search_links_dict))
+	# return search_links_dict
+	# return redirect(url_for('results2.html', search_links = search_links_dict))
+	return render_template('general_templates/results2.html', title = 'Results', results=search_links_dict)
+
 
 if __name__ == '__main__':
 	app.run(debug = True, threaded = True)
