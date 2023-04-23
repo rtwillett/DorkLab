@@ -2,37 +2,6 @@
 {% extends 'base_templates/dashboard_base.html' %}
 {% block title %}{% endblock %}
 
-{% block testing %}
-<h3 class="horizontal-auto-margin">Tools</h3>
-
-<li class="nav-item">
-    <a class="nav-link ghost-button-blue" aria-current="page" href={{ url_for('landing')}}>
-        <span class="ml-2">Home</span>
-    </a>
-</li>
-
-<hr>
-
-<li class="nav-item">
-    <a class="nav-link ghost-button-blue" aria-current="page" onclick="addFormElement">
-        <span class="ml-2">Add a term</span><span>+</span>
-    </a>
-</li>
-<li class="nav-item">
-    <a class="nav-link ghost-button-blue" aria-current="page" onclick="addFormElement">
-        <span class="ml-2">Tab 2</span>
-    </a>
-</li>
-<li class="nav-item">
-    <a class="nav-link ghost-button-blue" aria-current="page" onclick="addFormElement">
-        <span class="ml-2">Tab 3</span>
-    </a>
-</li>
-<hr>
-
-</ul>
-{% endblock %}
-
 {% block content %}
 <main class="main-center">
 
