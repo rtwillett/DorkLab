@@ -90,23 +90,18 @@
 			
 		</section>
 
-		<section>
-			<h3 class="h4 mt-5 px-0">Include Links to:</h3>
-
+		<section id="moreTerms" class="row">
+			<h3 class="h4 mt-5 px-0">Key Search Words</h3>
 			<div class="form-group">
-
-				<!-- <div>
-					<input type="checkbox" value="google" class="danger" id="se_google" name="search_engines">
-					<label for="se_google">Google</label>
-				</div>
-				<div>
-					<input type="checkbox" value="yandex" class="danger" id="se_yandex" name="search_engines">
-					<label for="se_yandex">Yandex</label>
-				</div> -->
-				{{ form.search_engines }}
+				{{ form.moreterms.label(class_ = 'col-form-label-md px-0') }}
+				{{ form.moreterms(class_ = 'form-control') }}
 			</div>
 
-
+			<h3 class="h4 mt-5 px-0">Filter Words</h3>
+			<div class="form-group">
+				{{ form.filterwords.label(class_ = 'col-form-label-md px-0') }}
+				{{ form.filterwords(class_ = 'form-control') }}
+			</div>
 		</section>
 
 

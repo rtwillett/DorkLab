@@ -18,42 +18,43 @@ class BuildSubstring:
     
         if self.data[col] == '':
             return ''
-            
-        return " & ".join([f'"{f}"' for f in self.data[col]])
+        else:    
+            return " & ".join([f'"{f}"' for f in self.data[col]])
 
     def or_logical_substring(self, col)->str:
         '''
         Docstring
         '''
     
-        if self.data[col] == '':
+        if self.data[col] == '' or self.data[col] == []:
             return ''
-            
-        return " | ".join([f'"{f}"' for f in self.data[col]])
+        else:
+            return " | ".join([f'"{f}"' for f in self.data[col]])
 
-    def build_root_substring(self)->str:
-        '''
-        Docstring
-        '''
+    # def build_root_substring(self)->str:
+    #     '''
+    #     Docstring
+    #     '''
     
-        if self.data['root_terms'] == '':
-            return ''
-            
-        return " & ".join([f'"{f}"' for f in self.data['root_terms']])
+    #     if self.data['root_terms'] == '':
+    #         return ''
+    #     else:
+    #         return " & ".join([f'"{f}"' for f in self.data['root_terms']])
 
-    def build_persons_substring(self)->str:
+    # def build_persons_substring(self)->str:
 
-        if self.data['persons'] == []:
-            return ''
-            
-        return " & ".join([f'"{f}"' for f in self.data['persons']])
+    #     if self.data['persons'] == []:
+    #         return ''
+    #     else:    
+    #         return " & ".join([f'"{f}"' for f in self.data['persons']])
 
-    def build_persons_substring(self)->str:
+    # def build_persons_substring(self)->str:
 
-        if self.data['gpe'] == []:
-            return ''
-            
-        return " & ".join([f'"{f}"' for f in self.data['gpe']])
+    #     if self.data['gpe'] == []:
+    #         return ''
+    #     else: 
+    #         return " & ".join([f'"{f}"' for f in self.data['gpe']])
+
 class BuildSubstringGoogle(BuildSubstring):
     def __init__(self, data: dict):
         self.data = data
@@ -66,7 +67,7 @@ class BuildSubstringGoogle(BuildSubstring):
         '''
     
         if self.data['filetypes'] != None:
-            ft_append = " | ".join([f'filetype:{f}' for f in self.data['filetypes']])
+            ft_append = " ".join([f'filetype:{f}' for f in self.data['filetypes']])
             return f"{ft_append}"
         else:
             return ''
@@ -77,7 +78,7 @@ class BuildSubstringGoogle(BuildSubstring):
         '''
     
         if self.data['urls'] != None:
-            ft_append = " | ".join([f'site:{f}' for f in self.data['urls']])
+            ft_append = " ".join([f'site:{f}' for f in self.data['urls']])
             return f"{ft_append}"
         else:
             return ''
@@ -106,7 +107,11 @@ class BuildSubstringGoogle(BuildSubstring):
         else: 
             print("What is this even?")
 
-
+    def build_morewords_substring(self): 
+        if self.data["moreterms"]:
+            return ' '.join({f'intext:{term}' for term in self.data['moreterms'] if term.strip() != ''})
+        else: 
+            return ''
 
     def build_full_string(self)->str:
         '''
@@ -118,15 +123,13 @@ class BuildSubstringGoogle(BuildSubstring):
         self.fragments = [
             "(" + self.or_logical_substring('persons') + ")",
             "(" + self.or_logical_substring('orgs') + ")",
-            "(" + self.or_logical_substring('gpe') + ")",
-            self.build_date_substring(),
-            self.build_filetype_substring()
+            "(" + self.or_logical_substring('gpe') + ")"
         ]
 
         # remove empty strings from the list before joining it
-        self.fragments = [list_item for list_item in self.fragments if (list_item != "") or (list_item !="()")]
+        self.fragments = [list_item for list_item in self.fragments if (list_item.strip() != "") or (list_item.strip() !="()")]
 
-        full_str = ' & '.join(self.fragments)
+        full_str = ' & '.join(self.fragments) + self.build_morewords_substring() + self.build_date_substring() + self.build_filetype_substring()
 
         # Removes & with nothing between them, empty parentheses and leading/trailing whitespace
         # This should be revisited to make so that this cleaning is not necessary in the first place
