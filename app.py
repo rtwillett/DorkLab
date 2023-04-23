@@ -91,17 +91,39 @@ def quicksearch():
 @app.route("/post_q", methods=['POST'])
 def post_q():
 
-	from modules.build_substring import BuildSubstring
+	# from modules.build_substring import BuildSubstring
+	import re
 
 	form_data_dict = {
 		'q': request.form.get('q')}
 
 	ns = NERDString(form_data_dict['q'])
 
+	form_data_dict['root_terms'] = re.split('[,;:]', form_data_dict['q'])
+	form_data_dict['persons'] = ns.data['persons']
+	form_data_dict['orgs'] = ns.data['orgs']
+	form_data_dict['gpe'] = ns.data['gpe']
+	form_data_dict['start_date'] = ns.data['min_date']
+	form_data_dict['end_date'] = ns.data['max_date']
+	form_data_dict['urls'] = ns.data['urls']
+	form_data_dict['filetypes'] = ns.data['filetypes']
+	form_data_dict['moreterms'] = []
+	form_data_dict['filterwords'] = []
+
+	bsg = BuildSubstringGoogle(form_data_dict).build_search_link()
+	bsy = BuildSubstringYandex(form_data_dict).build_search_link()
+	bsb = BuildSubstringBing(form_data_dict).build_search_link()
+
+	search_links_dict = {
+		"google": bsg,
+		"yandex": bsy,
+		"bing": bsb
+	}
 
 	# pass
-	return ns.data
+	# return ns.data
 	# return form_data_dict
+	return redirect(url_for('results', search_links = search_links_dict))
 
 if __name__ == '__main__':
 	app.run(debug = True, threaded = True)
