@@ -2,11 +2,7 @@ from flask import Flask, render_template, url_for, request, session, flash, redi
 
 # Importing all of the Blueprint objects into the application
 from flask_wtf.csrf import CSRFProtect
-<<<<<<< HEAD
 from modules.build_substring import BuildSubstringGoogle, BuildSubstringYandex, BuildSubstringBing, NERDString
-=======
-from modules.build_substring import BuildSubstringGoogle, BuildSubstringYandex, NERDString
->>>>>>> 73e5643 (fix typo)
 
 from forms import UserInput, QuicksearchForm
 
@@ -54,10 +50,7 @@ def post_dork_inputs():
 
 	bsg = BuildSubstringGoogle(form_data_dict).build_search_link()
 	bsy = BuildSubstringYandex(form_data_dict).build_search_link()
-<<<<<<< HEAD
 	bsb = BuildSubstringBing(form_data_dict).build_search_link()
-=======
->>>>>>> 73e5643 (fix typo)
 
 	search_links_dict = {
 		"google": bsg,
