@@ -41,7 +41,7 @@
 		<h1 class="py-4">Your Results Are Below</h1>
 
 		<div class="container_fluid">
-            <div class="row">
+            <div class="row my-4">
                 <div class="col-3">
                     <span>Google</span>
                 </div>
@@ -49,13 +49,13 @@
                     <a href="" target = "_blank" class="btn btn-primary" role="button">Save</a>
                 </div>
                 <div class="col-2">
-                    <a href="" target = "_blank" class="btn btn-primary" role="button">Copy</a>
+                    <a href="" onclick="copyToClipboard('{{results['google']['query']}}')" class="btn btn-primary" role="button">Copy</a>
                 </div>
                 <div class="col-2">
-                    <a href="{{results['google']}}" target = "_blank" class="btn btn-primary" role="button">Launch</a>
+                    <a href="{{results['google']['link']}}" target = "_blank" class="btn btn-primary" role="button">Launch</a>
                 </div>
             </div>
-            <div class="row">
+            <div class="row my-4">
                 <div class="col-3">
                     <span>Yandex</span>
                 </div>
@@ -63,13 +63,13 @@
                     <a href="" target = "_blank" class="btn btn-primary" role="button">Save</a>
                 </div>
                 <div class="col-2">
-                    <a href="" target = "_blank" class="btn btn-primary" role="button">Copy</a>
+                    <a href="" onclick="copyToClipboard('{{results['yandex']['query']}}')" class="btn btn-primary" role="button">Copy</a>
                 </div>
                 <div class="col-2">
-                    <a href="{{results['yandex']}}" target = "_blank" class="btn btn-primary" role="button">Launch</a>
+                    <a href="{{results['yandex']['link']}}" target = "_blank" class="btn btn-primary" role="button">Launch</a>
                 </div>
             </div>
-            <div class="row">
+            <div class="row my-4">
                 <div class="col-3">
                     <span>Bing</span>
                 </div>
@@ -77,15 +77,27 @@
                     <a href="" target = "_blank" class="btn btn-primary" role="button">Save</a>
                 </div>
                 <div class="col-2">
-                    <a href="" target = "_blank" class="btn btn-primary" role="button">Copy</a>
+                    <a href="" onclick="copyToClipboard('{{results['bing']['query']}}')" class="btn btn-primary" role="button">Copy</a>
                 </div>
                 <div class="col-2">
-                    <a href="{{results['bing']}}" target = "_blank" class="btn btn-primary" role="button">Launch</a>
+                    <a href="{{results['bing']['link']}}" target = "_blank" class="btn btn-primary" role="button">Launch</a>
                 </div>
             </div>
         </div>
 		<!-- <a href="{{results['google']}}" class="btn btn-outline-primary">Google Search</a>
 		<a href="{{results['yandex']}}" class="btn btn-outline-primary">Yandex Search</a> -->
+
+
+        <script>
+            function copyToClipboard(text) {
+                const el = document.createElement('textarea');
+                el.value = text;
+                document.body.appendChild(el);
+                el.select();
+                document.execCommand('copy');
+                document.body.removeChild(el);
+            }
+        </script>
 
         {% else %}
         Create a search query <a href="{{ url_for('home')}}">here</a> to see your results.
