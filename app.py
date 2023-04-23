@@ -20,7 +20,7 @@ app.config.from_object(Config)
 @app.route("/home")
 def home():
 	form = UserInput()
-	return render_template('general_templates/dashboard.html', form=form, title = 'aaixlsop')
+	return render_template('general_templates/dashboard.html', form=form, title = 'Input Search Parameters')
 
 # Routing
 @app.route("/post_dork_inputs", methods=['POST'])
@@ -56,7 +56,7 @@ def post_dork_inputs():
 # References
 @app.route("/about")
 def about():
-	return render_template('general_templates/about.html', title = 'aabbbs')
+	return render_template('general_templates/about.html', title = 'Abou This Site')
 
 @app.route("/quicksearch")
 def quicksearch():
