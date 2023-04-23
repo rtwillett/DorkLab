@@ -33,7 +33,8 @@ def post_dork_inputs():
 		'start_date': request.form.get('start_date'),
 		'end_date': request.form.get('end_date'),
 		'filetypes': request.form.getlist('filetypes'),
-		'moreterms': request.form.getlist('moreterms')
+		'moreterms': request.form.getlist('moreterms'),
+		'filterwords': request.form.getlist('filterwords')
 
 	}
 
@@ -48,8 +49,8 @@ def post_dork_inputs():
 
 	bs = BuildSubstringGoogle(form_data_dict)
 
-	# return form_data_dict
-	return  bs.q
+	return form_data_dict
+	# return  bs.q
 	# return render_template('general_templates/dashboard.html', title = 'Results', results=search_links_dict)
 
 # References
