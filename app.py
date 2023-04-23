@@ -48,14 +48,23 @@ def post_dork_inputs():
 	form_data_dict['filterwords'] = [x.strip() for x in re.split('[,;:]', form_data_dict['filterwords'][0].replace('\r', '\n').replace('\n', ', '))]
 
 
-	bsg = BuildSubstringGoogle(form_data_dict).build_search_link()
-	bsy = BuildSubstringYandex(form_data_dict).build_search_link()
-	bsb = BuildSubstringBing(form_data_dict).build_search_link()
+	bsg = BuildSubstringGoogle(form_data_dict)
+	bsy = BuildSubstringYandex(form_data_dict)
+	bsb = BuildSubstringBing(form_data_dict)
 
 	search_links_dict = {
-		"google": bsg,
-		"yandex": bsy,
-		"bing": bsb
+		"google": {
+			"link": bsg.build_search_link(),
+			"query": bsg.q
+		},
+		"yandex": {
+			"link": bsy.build_search_link(),
+			"query": bsy.q
+		},
+		"bing": {
+			"link": bsb.build_search_link(),
+			"query": bsb.q
+		}
 	}
 
 	#bs = BuildSubstringGoogle(form_data_dict)
@@ -78,7 +87,7 @@ def results():
 # References
 @app.route("/about")
 def about():
-	return render_template('general_templates/about.html', title = 'aabbbs')
+	return render_template('general_templates/about.html', title = 'About')
 
 @app.route("/quicksearch")
 def quicksearch():
