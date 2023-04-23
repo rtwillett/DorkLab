@@ -5,7 +5,7 @@ import urllib
 import spacy
 nlp = spacy.load("en_core_web_lg")
 
-class BuildSubstringGoogle:
+class BuildSubstring:
     def __init__(self, data: dict):
         self.data = data
 
@@ -166,7 +166,7 @@ class BuildSubstringGoogle(BuildSubstring):
                 
     #     return self.links_dict
 
-class BuildStringYandex(BuildSubstring):
+class BuildSubstringYandex(BuildSubstring):
     '''
     https://yandex.com/support/search/query-language/search-context.html
     https://seosly.com/blog/yandex-search-operators/

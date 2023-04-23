@@ -40,9 +40,52 @@
 		{% if results %}
 		<h1 class="py-4">Your Results Are Below</h1>
 
-		
-		<a href="{{results['google']}}" class="btn btn-outline-primary">Google Search</a>
-		<a href="{{results['yandex']}}" class="btn btn-outline-primary">Yandex Search</a>
+		<div class="container_fluid">
+            <div class="row">
+                <div class="col-3">
+                    <span>Google</span>
+                </div>
+                <div class="col-2">
+                    <a href="" target = "_blank" class="btn btn-primary" role="button">Save</a>
+                </div>
+                <div class="col-2">
+                    <a href="" target = "_blank" class="btn btn-primary" role="button">Copy</a>
+                </div>
+                <div class="col-2">
+                    <a href="{{results['google']}}" target = "_blank" class="btn btn-primary" role="button">Launch</a>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-3">
+                    <span>Yandex</span>
+                </div>
+                <div class="col-2">
+                    <a href="" target = "_blank" class="btn btn-primary" role="button">Save</a>
+                </div>
+                <div class="col-2">
+                    <a href="" target = "_blank" class="btn btn-primary" role="button">Copy</a>
+                </div>
+                <div class="col-2">
+                    <a href="{{results['yandex']}}" target = "_blank" class="btn btn-primary" role="button">Launch</a>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-3">
+                    <span>Bing</span>
+                </div>
+                <div class="col-2">
+                    <a href="" target = "_blank" class="btn btn-primary" role="button">Save</a>
+                </div>
+                <div class="col-2">
+                    <a href="" target = "_blank" class="btn btn-primary" role="button">Copy</a>
+                </div>
+                <div class="col-2">
+                    <a href="{{results['bing']}}" target = "_blank" class="btn btn-primary" role="button">Launch</a>
+                </div>
+            </div>
+        </div>
+		<!-- <a href="{{results['google']}}" class="btn btn-outline-primary">Google Search</a>
+		<a href="{{results['yandex']}}" class="btn btn-outline-primary">Yandex Search</a> -->
 
         {% else %}
         Create a search query <a href="{{ url_for('home')}}">here</a> to see your results.
