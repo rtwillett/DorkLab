@@ -1,0 +1,177 @@
+
+{% extends 'base_templates/dashboard_base.html' %}
+{% block title %}{% endblock %}
+
+{% block testing %}
+<h3 class="horizontal-auto-margin">Tools</h3>
+
+<li class="nav-item">
+    <a class="nav-link ghost-button-blue" aria-current="page" href={{ url_for('home')}}>
+        <span class="ml-2">Home</span>
+    </a>
+</li>
+
+<hr>
+
+<li class="nav-item">
+    <a class="nav-link ghost-button-blue" aria-current="page" onclick="addFormElement">
+        <span class="ml-2">Add a term</span><span>+</span>
+    </a>
+</li>
+<li class="nav-item">
+    <a class="nav-link ghost-button-blue" aria-current="page" onclick="addFormElement">
+        <span class="ml-2">Tab 2</span>
+    </a>
+</li>
+<li class="nav-item">
+    <a class="nav-link ghost-button-blue" aria-current="page" onclick="addFormElement">
+        <span class="ml-2">Tab 3</span>
+    </a>
+</li>
+<hr>
+
+</ul>
+{% endblock %}
+
+{% block content %}
+<main class="main-center">
+
+	{% block search_links %}
+		{% if results %}
+		<h1 class="py-4">Your Results Are Below</h1>
+
+		<div class="container_fluid">
+            <div class="row my-4">
+                <div class="col-3">
+                    <span>Google</span>
+                </div>
+                <div class="col-2">
+                    <a href="https://www.bellingcat.com" target = "_blank" class="btn btn-primary" role="button">Save</a>
+                </div>
+                <div class="col-2">
+                    <button class="btn btn-primary" id="copyGoogle">Copy</button>
+                </div>
+                <div class="col-2">
+                    <a href="{{results['google']['link']}}" target = "_blank" class="btn btn-primary" role="button">Launch</a>
+                </div>
+            </div>
+            <div class="row my-4">
+                <p id="grabGoogle">{{ results['google']['query'] }}</p>
+            </div>
+        </div>
+        <hr>
+        <div class="container_fluid">
+            <div class="row my-4">
+                <div class="col-3">
+                    <span>Yandex</span>
+                </div>
+                <div class="col-2">
+                    <a href="www.bellingcat.com" target = "_blank" class="btn btn-primary" role="button">Save</a>
+                </div>
+                <div class="col-2">
+                    <button class="btn btn-primary" id="copyYandex">Copy</button>                </div>
+                <div class="col-2">
+                    <a href="{{results['yandex']['link']}}" target = "_blank" class="btn btn-primary" role="button">Launch</a>
+                </div>
+            </div>
+            <div class="row my-4">
+                <p id="grabYandex">{{ results['yandex']['query'] }}</p>
+            </div>
+        </div>
+        <hr>
+        <div>
+            <div class="row my-4">
+                <div class="col-3">
+                    <span>Bing</span>
+                </div>
+                <div class="col-2">
+                    <a href="www.bellingcat.com" target = "_blank" class="btn btn-primary" role="button">Save</a>
+                </div>
+                <div class="col-2">
+                    <button class="btn btn-primary" id="copyBing">Copy</button>
+                </div>
+                <div class="col-2">
+                    <a href="{{results['bing']['link']}}" target = "_blank" class="btn btn-primary" role="button">Launch</a>
+                </div>
+            </div>
+            <div class="row my-4">
+                <p id="grabBing">{{ results['bing']['query'] }}</p>
+            </div>
+        </div>
+            
+        </div>
+		<!-- <a href="{{results['google']}}" class="btn btn-outline-primary">Google Search</a>
+		<a href="{{results['yandex']}}" class="btn btn-outline-primary">Yandex Search</a> -->
+
+
+        <script>
+
+            //////////////// I know that this in inefficient. I'll implement a more elegant, more DRY solution in the future. 
+            //////////////// I'm less experienced at javascript and this is a hackathon. Refactor later.
+
+            // FOR GOOGLE
+
+            // Reference of the paragraph tag
+            const contentGoogle = document.getElementById("grabGoogle");
+
+            // Reference of the copy button
+            const copyBtnGoogle = document.getElementById("copyGoogle");
+
+            // Copy button's onclick handler
+            copyBtnGoogle.onclick = copyToClipboardGoogle;      
+
+            function copyToClipboardGoogle() {
+                navigator.clipboard
+                    .writeText(contentGoogle.innerText)
+                    // .then(() => alert("Copied to clipboard"))
+                    .catch((e) => alert(e.message));
+            }
+
+            // FOR YANDEX
+
+            // Reference of the paragraph tag
+            const contentYandex = document.getElementById("grabYandex");
+
+            // Reference of the copy button
+            const copyBtnYandex = document.getElementById("copyYandex");
+
+            // Copy button's onclick handler
+            copyBtnYandex.onclick = copyToClipboardYandex;      
+
+            function copyToClipboardYandex() {
+                navigator.clipboard
+                    .writeText(contentYandex.innerText)
+                    // .then(() => alert("Copied to clipboard"))
+                    .catch((e) => alert(e.message));
+            }
+
+            // FOR BING
+
+            // Reference of the paragraph tag
+            const contentBing = document.getElementById("grabBing");
+
+            // Reference of the copy button
+            const copyBtnBing = document.getElementById("copyBing");
+
+            // Copy button's onclick handler
+            copyBtnBing.onclick = copyToClipboardBing;      
+
+            function copyToClipboardBing() {
+                navigator.clipboard
+                    .writeText(contentBing.innerText)
+                    // .then(() => alert("Copied to clipboard"))
+                    .catch((e) => alert(e.message));
+            }
+
+
+        </script>
+
+        {% else %}
+        Create a search query <a href="{{ url_for('home')}}">here</a> to see your results.
+
+		{% endif %}
+	{% endblock %}
+
+</main>
+
+{% endblock %}
