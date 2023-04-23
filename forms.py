@@ -18,6 +18,8 @@ class UserInput(FlaskForm):
     start_date = DateField('Start Date: ')
     end_date = DateField('End Date: ')
     filetype = MultiCheckboxField('Filetype', choices=['pdf', 'txt', 'docx', 'csv'])
+    moreterms = StringField('Additional words', widget=widgets.TextArea())
+    filterwords = StringField('Filter words', widget=widgets.TextArea())
     
     submit = SubmitField('Search')
 

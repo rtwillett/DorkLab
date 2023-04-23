@@ -1,23 +1,50 @@
 
-{% extends 'base_templates/layout.html' %}
-
-{% block topnavright %}
-<ul id="menu">
-	<li><a href="https://github.com/rtwillett/NERDoc" target="_blank"><img src="{{ url_for('static', filename='images/github.ico') }}" style="height: 25px"></a></li>
-	<li>|</li>
-	<li><a href= "">NER</a></li>
-	<li>|</li>
-	<li><a href= "">OCR</a></li>
-	<li>|</li>
-	<li><a href= "{{ url_for('references') }}">References</a></li>
-</ul>
-{% endblock %}
-
+{% extends 'base_templates/dashboard_base.html' %}
+{% block title %}{% endblock %}
 
 {% block content %}
 <main class="main-center">
-	<h2>References</h2>
-	<p>Here are some references</p>
+
+	<h2>Application</h2>
+	<p>The use of advance search operators can be difficult to use, variable across search engines, and challenging for trouble shooting - especially long and complex ones. Our project aims to lower the barrier of entry to using such search methods by detecting the nature of terms added in and strealining the logic of query construction.</p>
+
+	<h5>Use cases:</h5>
+
+	<ul>
+		<li>Introduction to use of advance search operators</li>
+		<li>Base for cheat cheats and references around such operators</li>
+		<li>Simplicity of construction of operators with numerous terms</li>
+	</ul>
+
+	<h3>Changelog</h3>
+	<p>Will track future changes</p>
+
+	<h3>Future Directions</h3>
+
+	<ul>
+		<li>Part of speech (POS) tagging to detect nouns in the quicksearch queries to build that into the additional filter words</li>
+		<li>Better detection of lookback and lookforward when one date is given in quicksearch</li>
+		<li>More search engines:</li>
+			<ul>
+				<li>Brave</li>
+				<li>DuckDuckGo</li>
+			</ul>
+	</ul>
+
+	<h3>Team</h3>
+	<table>
+		<tr>
+			<td>Ryan Willett</td>
+			<td>Github link</td>
+			<td>LinkedIn link</td>
+		</tr>
+		<tr>
+			<td>Ally Petitt</td>
+			<td>Github link</td>
+			<td>LinkedIn link</td>
+			<td>Medium link</td>
+		</tr>
+	</table>
 
 </main>
 
