@@ -16,11 +16,27 @@ Make sure you have Python version 3.8 or greater installed
 
 Download the tool's repository using the command:
 
+```
  git clone https://github.com/bellingcat/hackathon-submission-template.git
+```
+
 Move to the tool's directory and install the tool
 
+```
  cd hackathon-submission-template
- pip install .
+ pip install -r requirements.txt
+ python -m spacy download en_core_web_lg
+```
+
+Run the application
+```
+# method 1
+python app.py
+
+# method 2
+gunicorn app:app
+```
+
 
 ## Usage
 This sections includes detailed instructions for using the tool. If the tool has a command-line interface, include common commands and arguments, and some examples of commands and a description of the expected output. If the tool has a graphical user interface or a browser interface, include screenshots and describe a common workflow.
