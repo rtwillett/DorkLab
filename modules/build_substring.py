@@ -54,7 +54,11 @@ class BuildSubstring:
             return ''
             
         return " & ".join([f'"{f}"' for f in self.data['gpe']])
+class BuildSubstringGoogle(BuildSubstring):
+    def __init__(self, data: dict):
+        self.data = data
 
+        self.q = self.build_full_string()
 
     def build_filetype_substring(self)->str:
         '''
@@ -135,21 +139,6 @@ class BuildSubstring:
         from urllib.parse import quote
         
         return f"https://www.google.com/search?q={quote(self.q, safe='')}"
-
-    # def build_search_engine_strings(self)-> dict:
-        
-    #     self.links_dict = {}
-        
-        
-    #     for engine in self.data["search_engines"]:
-    #         if engine == "google":
-    #             self.links_dict["google"] = self.build_search_link()
-    #         elif engine == "yandex":
-    #             bsy = BuildStringYandex(self.data)
-    #             self.links_dict["yandex"] = bsy.link
-        
-                
-    #     return self.links_dict
 
 class BuildStringYandex(BuildSubstring):
     
