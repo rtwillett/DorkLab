@@ -12,6 +12,13 @@ This section is a list of team members, and possibly links to GitHub/GitLab/Link
 
 Web app tool for helping compose advance search operators (aka Google dorking AKA boolean searches) for a variety of search engines
 
+### Use Cases
+
+This application can be used for:
+* Introduction to use of advance search operators
+* Base for cheat cheats and references around such operators
+* Simplicity of construction of operators with numerous terms
+
 ## Installation
 
 This section includes detailed instructions for installing the tool, including any terminal commands that need to be executed and dependencies that need to be installed. Instructions should be understandable by non-technical users (e.g. someone who knows how to open a terminal and run commands, but isn't necessarily a programmer), for example:
@@ -48,12 +55,6 @@ gunicorn app:app
 This sections includes detailed instructions for using the tool. If the tool has a command-line interface, include common commands and arguments, and some examples of commands and a description of the expected output. If the tool has a graphical user interface or a browser interface, include screenshots and describe a common workflow.
 
 ## Additional Information
-### Use Cases
-
-This application can be used for:
-* Introduction to use of advance search operators
-* Base for cheat cheats and references around such operators
-* Simplicity of construction of operators with numerous terms
 
 
 ### Future Steps
