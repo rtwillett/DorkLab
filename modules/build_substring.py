@@ -18,42 +18,43 @@ class BuildSubstring:
     
         if self.data[col] == '':
             return ''
-            
-        return " & ".join([f'"{f}"' for f in self.data[col]])
+        else:    
+            return " & ".join([f'"{f}"' for f in self.data[col]])
 
     def or_logical_substring(self, col)->str:
         '''
         Docstring
         '''
     
-        if self.data[col] == '':
+        if self.data[col] == '' or self.data[col] == []:
             return ''
-            
-        return " | ".join([f'"{f}"' for f in self.data[col]])
+        else:
+            return " | ".join([f'"{f}"' for f in self.data[col]])
 
-    def build_root_substring(self)->str:
-        '''
-        Docstring
-        '''
+    # def build_root_substring(self)->str:
+    #     '''
+    #     Docstring
+    #     '''
     
-        if self.data['root_terms'] == '':
-            return ''
-            
-        return " & ".join([f'"{f}"' for f in self.data['root_terms']])
+    #     if self.data['root_terms'] == '':
+    #         return ''
+    #     else:
+    #         return " & ".join([f'"{f}"' for f in self.data['root_terms']])
 
-    def build_persons_substring(self)->str:
+    # def build_persons_substring(self)->str:
 
-        if self.data['persons'] == []:
-            return ''
-            
-        return " & ".join([f'"{f}"' for f in self.data['persons']])
+    #     if self.data['persons'] == []:
+    #         return ''
+    #     else:    
+    #         return " & ".join([f'"{f}"' for f in self.data['persons']])
 
-    def build_persons_substring(self)->str:
+    # def build_persons_substring(self)->str:
 
-        if self.data['gpe'] == []:
-            return ''
-            
-        return " & ".join([f'"{f}"' for f in self.data['gpe']])
+    #     if self.data['gpe'] == []:
+    #         return ''
+    #     else: 
+    #         return " & ".join([f'"{f}"' for f in self.data['gpe']])
+
 class BuildSubstringGoogle(BuildSubstring):
     def __init__(self, data: dict):
         self.data = data
@@ -66,7 +67,7 @@ class BuildSubstringGoogle(BuildSubstring):
         '''
     
         if self.data['filetypes'] != None:
-            ft_append = " | ".join([f'filetype:{f}' for f in self.data['filetypes']])
+            ft_append = " ".join([f'filetype:{f}' for f in self.data['filetypes']])
             return f"{ft_append}"
         else:
             return ''
@@ -76,8 +77,9 @@ class BuildSubstringGoogle(BuildSubstring):
         Docstring
         '''
     
-        if self.data['urls'] != None:
-            ft_append = " | ".join([f'site:{f}' for f in self.data['urls']])
+        # if self.data['urls'] != None:
+        if 'urls' in self.data:
+            ft_append = " ".join([f'site:{f}' for f in self.data['urls']])
             return f"{ft_append}"
         else:
             return ''
@@ -106,7 +108,17 @@ class BuildSubstringGoogle(BuildSubstring):
         else: 
             print("What is this even?")
 
+    def build_morewords_substring(self): 
+        if self.data["moreterms"]:
+            return ' '.join({f'intext:{term}' for term in self.data['moreterms'] if term.strip() != ''})
+        else: 
+            return ''
 
+    def build_filterwords_substring(self): 
+        if self.data["filterwords"]:
+            return ' '.join({f'-{term}' for term in self.data['filterwords'] if term.strip() != ''})
+        else: 
+            return ''
 
     def build_full_string(self)->str:
         '''
@@ -118,15 +130,14 @@ class BuildSubstringGoogle(BuildSubstring):
         self.fragments = [
             "(" + self.or_logical_substring('persons') + ")",
             "(" + self.or_logical_substring('orgs') + ")",
-            "(" + self.or_logical_substring('gpe') + ")",
-            self.build_date_substring(),
-            self.build_filetype_substring()
+            "(" + self.or_logical_substring('gpe') + ")"
         ]
 
         # remove empty strings from the list before joining it
-        self.fragments = [list_item for list_item in self.fragments if (list_item != "") or (list_item !="()")]
+        self.fragments = [list_item for list_item in self.fragments if (list_item.strip() != "") or (list_item.strip() !="()")]
 
-        full_str = ' & '.join(self.fragments)
+        full_str = ' & '.join(self.fragments) + ' ' +  self.build_morewords_substring() + ' ' + self.build_date_substring() + \
+            ' ' + self.build_filetype_substring() + ' ' + self.build_morewords_substring() + ' ' + self.build_filterwords_substring()
 
         # Removes & with nothing between them, empty parentheses and leading/trailing whitespace
         # This should be revisited to make so that this cleaning is not necessary in the first place
@@ -141,6 +152,10 @@ class BuildSubstringGoogle(BuildSubstring):
         return f"https://www.google.com/search?q={quote(self.q, safe='')}"
 
 class BuildStringYandex(BuildSubstring):
+    '''
+    https://yandex.com/support/search/query-language/search-context.html
+    https://seosly.com/blog/yandex-search-operators/
+    '''
     
     def __init__(self, data):
         super().__init__(data)
@@ -148,6 +163,16 @@ class BuildStringYandex(BuildSubstring):
         self.data = data
         self.link = self.build_search_link()
         
+    def and_logical_substring(self, col)->str:
+        '''
+        Using polymorphism to override the method of the same name in the abstract class
+        Yandex uses && or << to match terms in the same document.
+        '''
+    
+        if self.data[col] == '':
+            return ''
+            
+        return " & ".join([f'"{f}"' for f in self.data[col]])
         
     def build_filetype_substring(self)->str:
         '''
@@ -156,6 +181,18 @@ class BuildStringYandex(BuildSubstring):
         if len(self.data['filetypes']) > 0:
             ft_append = " | ".join([f'mime:{f}' for f in self.data['filetypes']])
             return f"({ft_append})"
+        else:
+            return ''
+        
+    def build_site_substring(self)->str:
+        '''
+        Docstring
+        '''
+    
+#         if self.data['urls']:
+        if 'urls' in self.data:
+            ft_append = " | ".join([f'site:{f}' for f in self.data['urls']])
+            return f"{ft_append}"
         else:
             return ''
         
@@ -177,6 +214,43 @@ class BuildStringYandex(BuildSubstring):
             return ""
         else: 
             print("If this is printed, something went wrong")
+            
+    def build_full_string(self)->str:
+        '''
+        Docstring
+        '''
+
+        import re
+
+        self.fragments = [
+            "(" + self.or_logical_substring('persons') + ")",
+            "(" + self.or_logical_substring('orgs') + ")",
+            "(" + self.or_logical_substring('gpe') + ")"
+        ]
+
+        # remove empty strings from the list before joining it
+        self.fragments = [list_item for list_item in self.fragments if (list_item != "") or (list_item !="()")]
+
+        full_str = ' << '.join(self.fragments) + ' ' +  self.build_morewords_substring() + ' ' + self.build_date_substring() + \
+            ' ' + self.build_filetype_substring() + ' ' + self.build_morewords_substring() + ' ' + self.build_filterwords_substring()
+
+        # Removes & with nothing between them, empty parentheses and leading/trailing whitespace
+        # This should be revisited to make so that this cleaning is not necessary in the first place
+        full_str = re.sub('<<\s{0,}<<', '', full_str).replace('()', '').strip()
+
+        return full_str
+    
+    def build_morewords_substring(self): 
+        if self.data["moreterms"]:
+            return ' '.join({f'!{term}' for term in self.data['moreterms'] if term.strip() != ''})
+        else: 
+            return ''
+
+    def build_filterwords_substring(self): 
+        if self.data["filterwords"]:
+            return ' '.join({f'-{term}' for term in self.data['filterwords'] if term.strip() != ''})
+        else: 
+            return ''
 
 
     def build_search_link(self)-> str:
@@ -184,6 +258,101 @@ class BuildStringYandex(BuildSubstring):
 
         return f"https://yandex.com/search/?text={quote(self.q, safe='')}"
 
+class BuildSubstringBing(BuildSubstring):
+    def __init__(self, data: dict):
+        self.data = data
+
+        self.q = self.build_full_string()
+
+    def build_filetype_substring(self)->str:
+        '''
+        Docstring
+        '''
+    
+        if self.data['filetypes'] != None:
+            ft_append = " ".join([f'filetype:{f}' for f in self.data['filetypes']])
+            return f"{ft_append}"
+        else:
+            return ''
+
+    def build_site_substring(self)->str:
+        '''
+        Docstring
+        '''
+    
+        # if self.data['urls'] != None:
+        if 'urls' in self.data:
+            ft_append = " ".join([f'site:{f}' for f in self.data['urls']])
+            return f"{ft_append}"
+        else:
+            return ''
+
+
+#     def build_date_substring(self)->str:
+#         '''
+#         Docstring
+#         '''
+        
+#         if self.data["start_date"]: start_dt = self.data["start_date"]
+#         else: start_dt = ""
+
+#         if self.data["end_date"]: end_dt = self.data["end_date"]
+#         else: end_dt = ""
+
+        
+#         if start_dt != "" and end_dt != "":
+#             return f'after:{start_dt} & before:{end_dt}'
+#         elif start_dt == "" and end_dt != "":
+#             return f'before:{start_dt}'
+#         elif start_dt != "" and end_dt == "":
+#             return f'after:{start_dt}'
+#         elif start_dt == "" and end_dt == "":
+#             return ""
+#         else: 
+#             print("What is this even?")
+
+    def build_morewords_substring(self): 
+        if self.data["moreterms"]:
+            return ' '.join({f'inbody:{term}' for term in self.data['moreterms'] if term.strip() != ''})
+        else: 
+            return ''
+
+    def build_filterwords_substring(self): 
+        if self.data["filterwords"]:
+            return ' '.join({f'-{term}' for term in self.data['filterwords'] if term.strip() != ''})
+        else: 
+            return ''
+
+    def build_full_string(self)->str:
+        '''
+        Docstring
+        '''
+
+        import re
+
+        self.fragments = [
+            "(" + self.or_logical_substring('persons') + ")",
+            "(" + self.or_logical_substring('orgs') + ")",
+            "(" + self.or_logical_substring('gpe') + ")"
+        ]
+
+        # remove empty strings from the list before joining it
+        self.fragments = [list_item for list_item in self.fragments if (list_item.strip() != "") or (list_item.strip() !="()")]
+
+        full_str = ' & '.join(self.fragments) + ' ' +  self.build_morewords_substring() + ' ' + \
+            ' ' + self.build_filetype_substring() + ' ' + self.build_morewords_substring() + ' ' + self.build_filterwords_substring()
+
+        # Removes & with nothing between them, empty parentheses and leading/trailing whitespace
+        # This should be revisited to make so that this cleaning is not necessary in the first place
+        full_str = re.sub('&\s{0,}&', '', full_str).replace('()', '').strip()
+
+        return full_str
+
+
+    def build_search_link(self)-> str:
+        from urllib.parse import quote
+        
+        return f"https://www.bing.com/search?q={quote(self.q, safe='')}"
 
 class NERDString:
     
@@ -272,3 +441,4 @@ class NERDString:
     def extract_urls(self):
         import re
         self.data['urls'] = [i for i in self.text.split() if ('.' in i) and ('@' not in i) and (not re.search('\.$', i))]
+

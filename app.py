@@ -32,8 +32,10 @@ def post_dork_inputs():
 		'root_terms': request.form.get('root_terms'),
 		'start_date': request.form.get('start_date'),
 		'end_date': request.form.get('end_date'),
-		'filetypes': request.form.getlist('filetypes')
-		# 'search_engines': request.form.getlist('search_engines')
+		'filetypes': request.form.getlist('filetypes'),
+		'moreterms': request.form.getlist('moreterms'),
+		'filterwords': request.form.getlist('filterwords')
+
 	}
 
 	ns = NERDString(form_data_dict['root_terms'])
@@ -42,8 +44,8 @@ def post_dork_inputs():
 	form_data_dict['persons'] = ns.data['persons']
 	form_data_dict['orgs'] = ns.data['orgs']
 	form_data_dict['gpe'] = ns.data['gpe']
-	
-	# form_data_dict['filetypes'] = form_data_dict['filetypes'].split()
+	form_data_dict['moreterms'] = [x.strip() for x in re.split('[,;:]', form_data_dict['moreterms'][0].replace('\r', '\n').replace('\n', ', '))]
+	form_data_dict['filterwords'] = [x.strip() for x in re.split('[,;:]', form_data_dict['filterwords'][0].replace('\r', '\n').replace('\n', ', '))]
 
 	bs = BuildSubstringGoogle(form_data_dict)
 
@@ -54,7 +56,7 @@ def post_dork_inputs():
 # References
 @app.route("/about")
 def about():
-	return render_template('general_templates/references.html', title = 'aabbbs')
+	return render_template('general_templates/about.html', title = 'aabbbs')
 
 @app.route("/quicksearch")
 def quicksearch():
