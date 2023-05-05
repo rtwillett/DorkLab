@@ -10,10 +10,6 @@ a:hover {
 
 /* Dealing with the nav bar and the drop down hamburger */
 #nav_bar{
-    /* background-color: #fff;
-    border-bottom: #3B4868;
-    border-bottom: solid;
-    font-weight:bold; */
     height: 30px;
     font-size:20px;
     color: #042430;
@@ -134,18 +130,15 @@ input[type="radio"] {
 footer {
     padding-top: 10px;
     background-color: #020c36;
-    /* color: #7A7A7A; */
     font-family:'Roboto', sans-serif;
 }
 
 .left-footer {
-    /*margin-left: 10px;*/
     padding: 10px;
     margin: auto;
 }
 
 .right-footer {
-    /*margin-left: 10px;*/
     padding: 10px;
     margin: auto;
 }
@@ -158,5 +151,4 @@ td {
 
 .separator {
     height: 5px;
-    /* background-color: #042430; */
 }
