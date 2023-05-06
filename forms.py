@@ -14,12 +14,12 @@ class MultiCheckboxField(SelectMultipleField):
 
 class UserInput(FlaskForm):
 
-    root_terms = StringField("Enter your search terms: ",[DataRequired()])
+    root_terms = StringField("What are you looking for (names, locations, organizations, etc.)? ",[DataRequired()])
     start_date = DateField('Start Date: ')
     end_date = DateField('End Date: ')
     filetype = MultiCheckboxField('Filetype', choices=['pdf', 'txt', 'docx', 'csv'])
-    moreterms = StringField('Required words for search results', widget=widgets.TextArea())
-    filterwords = StringField('Words to barred from search results', widget=widgets.TextArea())
+    moreterms = StringField('Words to include in search:', widget=widgets.TextArea())
+    filterwords = StringField('Words to exclude from search:', widget=widgets.TextArea())
     
     submit = SubmitField('Search')
 
