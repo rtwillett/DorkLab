@@ -2,6 +2,20 @@
 {% extends 'base_templates/dashboard_base.html' %}
 {% block title %}{% endblock %}
 
+{% block testing %}
+<h3 class="horizontal-auto-margin">Tools</h3>
+
+<li class="nav-item">
+    <a class="nav-link ghost-button-blue" aria-current="page" href={{ url_for('landing')}}>
+        <span class="ml-2">Home</span>
+    </a>
+</li>
+
+<hr>
+
+</ul>
+{% endblock %}
+
 {% block content %}
 <main class="main-center">
 
@@ -10,68 +24,76 @@
 	<form action="post_dork_inputs" method="POST" class="container">
 		
 		{{ form.hidden_tag() }}
+		<div class="row">
+			<div class="col-6">
+				<section id="root_terms" class="row">
+					<h3 class="h4 mt-5 px-0">Entities, People, Places and Things</h3>
+					<div class="form-group">
+						{{ form.root_terms.label(class_ = 'col-form-label-md px-0') }} <br />
+						{{ form.root_terms(class_ = 'form-control', placeholder="Vladimir Putin, Ukraine") }}
+					</div>
+				</section>
 
-		<section id="root_terms" class="row">
-			<h3 class="h4 mt-5 px-0">Filter by Terms</h3>
-			<div class="form-group">
-				{{ form.root_terms.label(class_ = 'col-form-label-md px-0') }} <br />
-				{{ form.root_terms(class_ = 'form-control', placeholder="Search something...") }}
+				<section id="moreTerms" class="row">
+					<h3 class="h4 mt-5 px-0">Key Search Words</h3>
+					<div class="form-group">
+						{{ form.moreterms.label(class_ = 'col-form-label-md px-0') }}
+						{{ form.moreterms(class_ = 'form-control', placeholder="invasion") }}
+					</div>
+		
+					<h3 class="h4 mt-5 px-0">Filter Words</h3>
+					<div class="form-group">
+						{{ form.filterwords.label(class_ = 'col-form-label-md px-0') }}
+						{{ form.filterwords(class_ = 'form-control', placeholder="disinformation, Glavset, Главсеть") }}
+					</div>
+				</section>
 			</div>
-		</section>
 
-		<section id="timePeriod" class="row">
-			<h3 class="h4 mt-5 px-0">Filter by Time Period</h3>
-			<div class="form-group">
-				{{ form.start_date.label(class_ = 'col-form-label-md px-0') }}
-				{{ form.start_date(class_ = 'form-control') }}
-			</div>
+			<div class="col-6">
+				<section id="timePeriod" class="row">
+					<h3 class="h4 mt-5 px-0">Filter by Time Period</h3>
+					<div class="form-group">
+						{{ form.start_date.label(class_ = 'col-form-label-md px-0') }}
+						{{ form.start_date(class_ = 'form-control', placeholder="2022-02-22") }}
+					</div>
+		
+					<div class="form-group">
+						{{ form.end_date.label(class_ = 'col-form-label-md px-0') }}
+						{{ form.end_date(class_ = 'form-control', placeholder="2023-04-01") }}
+					</div>
+				</section>
 
-			<div class="form-group">
-				{{ form.end_date.label(class_ = 'col-form-label-md px-0') }}
-				{{ form.end_date(class_ = 'form-control') }}
-			</div>
-		</section>
-
-		<section>
-			<h3 class="h4 mt-5 px-0">File Types</h3>
-			<div class="form-group">
-				<div>
-					<input type="checkbox" value="pdf" class="danger" id="doc_pdf" name='filetypes'>
-					<label for="doc_pdf">PDF</label>
-				</div>
-				<div>
-					<input type="checkbox" value="txt" class="danger" id="doc_txt" name='filetypes'>
-					<label for="doc_txt">TXT</label>
-				</div>
-				<div>
-					<input type="checkbox" value="csv" class="danger" id="doc_csv" name='filetypes'>
-					<label for="doc_csv">CSV</label>
-				</div>
-				<div>
-					<input type="checkbox" value="docx" class="danger" id="doc_docx" name='filetypes'>
-					<label for="doc_docx">DOCX</label>
-				</div>
-				<div>
-					<input type="checkbox" value="json" class="danger" id="doc_json" name='filetypes'>
-					<label for="doc_json">JSON</label>
-				</div>
+				<section>
+					<h3 class="h4 mt-5 px-0">File Types</h3>
+					<div class="form-group">
+						<div>
+							<input type="checkbox" value="pdf" class="danger" id="doc_pdf" name='filetypes'>
+							<label for="doc_pdf">PDF</label>
+						</div>
+						<div>
+							<input type="checkbox" value="txt" class="danger" id="doc_txt" name='filetypes'>
+							<label for="doc_txt">TXT</label>
+						</div>
+						<div>
+							<input type="checkbox" value="csv" class="danger" id="doc_csv" name='filetypes'>
+							<label for="doc_csv">CSV</label>
+						</div>
+						<div>
+							<input type="checkbox" value="docx" class="danger" id="doc_docx" name='filetypes'>
+							<label for="doc_docx">DOCX</label>
+						</div>
+						<div>
+							<input type="checkbox" value="json" class="danger" id="doc_json" name='filetypes'>
+							<label for="doc_json">JSON</label>
+						</div>
+					</div>
+					
+				</section>
 			</div>
 			
-		</section>
+		</div>
 
-		<section id="moreTerms" class="row">
-			<h3 class="h4 mt-5 px-0">Key Search Words</h3>
-			<div class="form-group">
-				{{ form.moreterms.label(class_ = 'col-form-label-md px-0') }}
-				{{ form.moreterms(class_ = 'form-control') }}
-			</div>
-
-			<h3 class="h4 mt-5 px-0">Filter Words</h3>
-			<div class="form-group">
-				{{ form.filterwords.label(class_ = 'col-form-label-md px-0') }}
-				{{ form.filterwords(class_ = 'form-control') }}
-			</div>
-		</section>
+		
 
 
 		{{ form.submit(class_ = 'form-control mt-5 btn btn-outline-dark') }}
