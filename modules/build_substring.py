@@ -57,9 +57,9 @@ class BuildSubstring:
 
 class BuildSubstringGoogle(BuildSubstring):
     def __init__(self, data: dict):
-        self.data = data
-
-        self.q = self.build_full_string()
+        super().__init__(data)
+        # self.data = data
+        # self.q = self.build_full_string()
 
     def build_filetype_substring(self)->str:
         '''
@@ -134,7 +134,7 @@ class BuildSubstringGoogle(BuildSubstring):
         ]
 
         # remove empty strings from the list before joining it
-        self.fragments = [list_item for list_item in self.fragments if (list_item.strip() != "") or (list_item.strip() !="()")]
+        self.fragments = [list_item for list_item in self.fragments if (list_item.strip() != "()") or (list_item.strip() !="()")]
 
         full_str = ' & '.join(self.fragments) + ' ' +  self.build_morewords_substring() + ' ' + self.build_date_substring() + \
             ' ' + self.build_filetype_substring() + ' ' + self.build_morewords_substring() + ' ' + self.build_filterwords_substring()
@@ -175,8 +175,8 @@ class BuildSubstringYandex(BuildSubstring):
     def __init__(self, data):
         super().__init__(data)
 
-        self.data = data
-        self.link = self.build_search_link()
+        # self.data = data
+        # self.link = self.build_search_link()
         
     def and_logical_substring(self, col)->str:
         '''
@@ -244,7 +244,7 @@ class BuildSubstringYandex(BuildSubstring):
         ]
 
         # remove empty strings from the list before joining it
-        self.fragments = [list_item for list_item in self.fragments if (list_item != "") or (list_item !="()")]
+        self.fragments = [list_item for list_item in self.fragments if (list_item != "()") or (list_item !="()")]
 
         full_str = ' << '.join(self.fragments) + ' ' +  self.build_morewords_substring() + ' ' + self.build_date_substring() + \
             ' ' + self.build_filetype_substring() + ' ' + self.build_morewords_substring() + ' ' + self.build_filterwords_substring()
@@ -275,9 +275,10 @@ class BuildSubstringYandex(BuildSubstring):
 
 class BuildSubstringBing(BuildSubstring):
     def __init__(self, data: dict):
-        self.data = data
+        super().__init__(data)
+        # self.data = data
 
-        self.q = self.build_full_string()
+        # self.q = self.build_full_string()
 
     def build_filetype_substring(self)->str:
         '''
@@ -352,7 +353,7 @@ class BuildSubstringBing(BuildSubstring):
         ]
 
         # remove empty strings from the list before joining it
-        self.fragments = [list_item for list_item in self.fragments if (list_item.strip() != "") or (list_item.strip() !="()")]
+        self.fragments = [list_item for list_item in self.fragments if (list_item.strip() != "()") or (list_item.strip() !="()")]
 
         full_str = ' & '.join(self.fragments) + ' ' +  self.build_morewords_substring() + ' ' + \
             ' ' + self.build_filetype_substring() + ' ' + self.build_morewords_substring() + ' ' + self.build_filterwords_substring()
